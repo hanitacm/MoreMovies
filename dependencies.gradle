@@ -1,0 +1,101 @@
+ext {
+    //Android
+    androidMinSdkVersion = 23
+    androidTargetSdkVersion = 33
+    androidCompileSdkVersion = 33
+
+    //Libraries
+    android_cardview_version = "1.0.0"
+    android_constraint_layout_version = '2.1.4'
+    android_ktx_version = "1.9.0"
+    android_lifecycle = "2.2.0"
+    android_lifecycle_viewmodel = '2.5.1'
+    android_nav_version = '2.5.1'
+    android_recyclerview_version = '1.2.1'
+    android_support_version = '1.5.0'
+
+    coil_version = "0.13.0"
+    javax_inject_version = "1"
+    moshi_version="1.13.0"
+    okhttp_version = "4.8.1"
+    retrofit_version = "2.7.2"
+    room_version = '2.4.3'
+    rxandroid_version = '2.0.2'
+    rxjava_version = "2.1.10"
+
+    //Test
+    androidx_test_version = '1.4.0'
+    core_testing_version = '2.1.0'
+    dexmaker_mockito_version = "2.28.3"
+    espresso_version = '3.4.0'
+    fragment_testing_version = "1.3.0-alpha08"
+    //hilt_testing_version = "1.0.0-alpha02"
+    junit_version = "4.13"
+    junit_test_version = '1.1.3'
+    mockito_version = "3.3.3"
+    mockito_kotlin_version = "2.2.0"
+
+
+    baseDependencies = [
+            android_ktx                : "androidx.core:core-ktx:${android_ktx_version}",
+            android_lifecycle          : "androidx.lifecycle:lifecycle-extensions:${android_lifecycle}",
+            android_lifecycle_viewmodel: "androidx.lifecycle:lifecycle-viewmodel-ktx:${android_lifecycle_viewmodel}",
+            hilt                       : "com.google.dagger:hilt-android:${hilt_version}",
+            hilt_android_compiler      : "com.google.dagger:hilt-android-compiler:${hilt_version}",
+            javax_inject               : "javax.inject:javax.inject:${javax_inject_version}",
+            kotlin_stdlib              : "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}",
+            moshi                      : "com.squareup.moshi:moshi:${moshi_version}",
+            moshi_codegen              : "com.squareup.moshi:moshi-kotlin-codegen:${moshi_version}",
+            okhhtp_logging             : "com.squareup.okhttp3:logging-interceptor:${okhttp_version}",
+            room                       : "androidx.room:room-runtime:${room_version}",
+            room_compiler              : "androidx.room:room-compiler:${room_version}",
+            room_rxjava2               : "androidx.room:room-rxjava2:${room_version}",
+            retrofit                   : "com.squareup.retrofit2:retrofit:${retrofit_version}",
+            retrofit_rxJava            : "com.squareup.retrofit2:adapter-rxjava2:${retrofit_version}",
+            retrofit_moshi             : "com.squareup.retrofit2:converter-moshi:${retrofit_version}",
+            rxjava                     : "io.reactivex.rxjava2:rxjava:${rxjava_version}",
+            rxandroid                  : "io.reactivex.rxjava2:rxandroid:${rxandroid_version}"
+
+    ]
+
+
+    uiDependencies = [
+            cardview           : "androidx.cardview:cardview:${android_cardview_version}",
+            coil               : "io.coil-kt:coil:${coil_version}",
+            constraint_layout  : "androidx.constraintlayout:constraintlayout:${android_constraint_layout_version}",
+            navigation_fragment: "androidx.navigation:navigation-fragment-ktx:${android_nav_version}",
+            navigation_ui      : "androidx.navigation:navigation-ui-ktx:${android_nav_version}",
+            recyclerview       : "androidx.recyclerview:recyclerview:${android_recyclerview_version}",
+            support_appcompat  : "androidx.appcompat:appcompat:${android_support_version}"
+
+
+    ]
+
+    testDependencies = [
+            android_core_testing: "androidx.arch.core:core-testing:${core_testing_version}",
+            junit               : "junit:junit:${junit_version}",
+            mockito             : "org.mockito:mockito-inline:${mockito_version}",
+            mockito_kotlin      : "com.nhaarman.mockitokotlin2:mockito-kotlin:${mockito_kotlin_version}",
+            room_testing        : "androidx.room:room-testing:$room_version"
+
+
+    ]
+
+    uiTestDependencies = [
+            //android_fragment_testing: "androidx.fragment:fragment-testing:$fragment_testing_version",
+            android_core_testing: "androidx.arch.core:core-testing:${core_testing_version}",
+            android_ktx_testing : "androidx.test:core-ktx:${androidx_test_version}",
+            android_test_rules  : "androidx.test:rules:${androidx_test_version}",
+            android_test_runner : "androidx.test:runner:${androidx_test_version}",
+            espresso            : "androidx.test.espresso:espresso-core:${espresso_version}",
+            espresso_contrib    : "androidx.test.espresso:espresso-contrib:${espresso_version}",
+            hilt_testing        : "com.google.dagger:hilt-android-testing:${hilt_version}",
+            junit               : "junit:junit:${junit_version}",
+            junit_testing       : "androidx.test.ext:junit:${junit_test_version}",
+            mockito_kotlin      : "com.nhaarman.mockitokotlin2:mockito-kotlin:${mockito_kotlin_version}",
+            dexmaker_mockito    : "com.linkedin.dexmaker:dexmaker-mockito:${dexmaker_mockito_version}"
+
+
+    ]
+
+}

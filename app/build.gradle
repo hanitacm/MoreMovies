@@ -1,0 +1,95 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'com.google.dagger.hilt.android'
+}
+
+android {
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
+
+    defaultConfig {
+        applicationId "com.hanitacm.moremovies"
+        minSdkVersion globalConfiguration["androidMinSdkVersion"]
+        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "com.hanitacm.moremovies.CustomTestRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
+kapt {
+    correctErrorTypes true
+}
+
+dependencies {
+    def baseDependencies = rootProject.ext.baseDependencies
+    def uiDependencies = rootProject.ext.uiDependencies
+    def testDependencies = rootProject.ext.testDependencies
+    def uiTestDependencies = rootProject.ext.uiTestDependencies
+
+    implementation project(":data")
+
+    implementation baseDependencies.kotlin_stdlib
+    implementation baseDependencies.android_ktx
+    implementation baseDependencies.android_lifecycle
+    implementation baseDependencies.android_lifecycle_viewmodel
+    implementation baseDependencies.hilt
+    kapt baseDependencies.hilt_android_compiler
+    implementation baseDependencies.okhhtp_logging
+    implementation baseDependencies.retrofit
+    implementation baseDependencies.retrofit_rxJava
+    implementation baseDependencies.retrofit_moshi
+    implementation baseDependencies.room
+    kapt baseDependencies.room_compiler
+    implementation baseDependencies.rxjava
+    implementation baseDependencies.rxandroid
+
+    implementation uiDependencies.cardview
+    implementation uiDependencies.coil
+    implementation uiDependencies.constraint_layout
+    implementation uiDependencies.navigation_ui
+    implementation uiDependencies.navigation_fragment
+    implementation uiDependencies.recyclerview
+    implementation uiDependencies.support_appcompat
+
+
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.mockito
+    testImplementation testDependencies.mockito_kotlin
+    testImplementation testDependencies.android_core_testing
+
+    androidTestImplementation uiTestDependencies.android_core_testing
+    androidTestImplementation uiTestDependencies.android_ktx_testing
+    androidTestImplementation uiTestDependencies.dexmaker_mockito
+    androidTestImplementation uiTestDependencies.mockito_kotlin
+    androidTestImplementation uiTestDependencies.espresso
+    androidTestImplementation uiTestDependencies.espresso_contrib
+    androidTestImplementation uiTestDependencies.hilt_testing
+    kaptAndroidTest baseDependencies.hilt_android_compiler
+    androidTestImplementation uiTestDependencies.junit
+    androidTestImplementation uiTestDependencies.junit_testing
+}
