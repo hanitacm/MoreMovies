@@ -1,0 +1,41 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'kotlin-kapt'
+
+
+android {
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
+
+    defaultConfig {
+        minSdkVersion globalConfiguration["androidMinSdkVersion"]
+        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
+    }
+
+
+}
+
+dependencies {
+
+    def baseDependencies = rootProject.ext.baseDependencies
+    def testDependencies = rootProject.ext.testDependencies
+
+
+    implementation baseDependencies.javax_inject
+    implementation baseDependencies.moshi
+    kapt baseDependencies.moshi_codegen
+    implementation baseDependencies.room
+    kapt baseDependencies.room_compiler
+    implementation baseDependencies.room_rxjava2
+    implementation baseDependencies.retrofit
+    implementation baseDependencies.retrofit_moshi
+    implementation baseDependencies.rxjava
+
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.mockito
+    testImplementation testDependencies.mockito_kotlin
+    testImplementation testDependencies.room_testing
+
+}
