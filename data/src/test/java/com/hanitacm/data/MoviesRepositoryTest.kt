@@ -5,7 +5,6 @@ import com.hanitacm.data.datasource.cache.MoviesCache
 import com.hanitacm.data.repository.MoviesRepository
 import com.hanitacm.data.repository.model.MovieDataModel
 import com.hanitacm.data.repository.model.MovieDomainModel
-import com.hanitacm.data.repository.model.mappers.MovieDataModelMapper
 import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -14,7 +13,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Spy
 import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
@@ -26,9 +24,6 @@ class MoviesRepositoryTest {
 
     @Mock
     lateinit var moviesCache: MoviesCache
-
-    @Spy
-    lateinit var moviesDataModelMapper: MovieDataModelMapper
 
     @InjectMocks
     lateinit var moviesRepository: MoviesRepository
@@ -75,8 +70,6 @@ class MoviesRepositoryTest {
 
         val moviesResponse = moviesRepository.getPopularMovies()
 
-        verify(moviesDataModelMapper).mapToDomainModel(moviesDataModel)
-
         Assert.assertEquals(moviesDomainModel, moviesResponse)
     }
 
@@ -90,7 +83,6 @@ class MoviesRepositoryTest {
 
         verify(moviesCache, only()).getMovieDetail(id)
         verifyZeroInteractions(moviesApi)
-        verify(moviesDataModelMapper).mapToDomainModel(movieDataModel)
 
         assert(movieResponse == movieDomainModel)
 
