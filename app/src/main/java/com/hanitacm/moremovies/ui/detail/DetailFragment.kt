@@ -9,6 +9,9 @@ import androidx.core.text.scale
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navGraphViewModels
 import coil.load
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
@@ -16,8 +19,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.hanitacm.data.repository.model.MovieDomainModel
 import com.hanitacm.moremovies.R
 import com.hanitacm.moremovies.databinding.DetailFragmentBinding
+import com.hanitacm.moremovies.ui.detail.DetailViewModelState.*
 import com.hanitacm.moremovies.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.util.*
 
 @AndroidEntryPoint
@@ -32,12 +37,18 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.viewState.observe(viewLifecycleOwner) {
-            when (it) {
-                is DetailViewModelState.Loading -> showProgressBar()
-                is DetailViewModelState.DetailLoaded -> loadMovieDetail(it.movie)
-                is DetailViewModelState.DetailLoadFailure -> showError(it.error.message)
+        lifecycleScope.launch {
+            viewModel.viewState.flowWithLifecycle(
+                viewLifecycleOwner.lifecycle,
+                Lifecycle.State.STARTED
+            ).collect {
+                when (it) {
+                    is Loading -> showProgressBar()
+                    is DetailLoaded -> loadMovieDetail(it.movie)
+                    is DetailLoadFailure -> showError(it.error.message)
+                }
             }
+
         }
 
         val movieId: Int = arguments?.getInt("movie")!!

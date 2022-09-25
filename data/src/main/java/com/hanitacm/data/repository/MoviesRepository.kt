@@ -3,13 +3,13 @@ package com.hanitacm.data.repository
 import com.hanitacm.data.datasource.api.MoviesApi
 import com.hanitacm.data.datasource.cache.MoviesCache
 import com.hanitacm.data.repository.model.MovieDomainModel
-import com.hanitacm.data.repository.model.mappers.MovieDataModelMapper
+import com.hanitacm.data.repository.model.mappers.asDomainModel
+
 import javax.inject.Inject
 
 class MoviesRepository @Inject constructor(
     private val moviesApi: MoviesApi,
     private val moviesCache: MoviesCache,
-    private val mapper: MovieDataModelMapper
 ) {
 
     suspend fun getPopularMovies(): List<MovieDomainModel> {
@@ -19,12 +19,15 @@ class MoviesRepository @Inject constructor(
             movies = moviesApi.getAllMovies()
             moviesCache.insertMovies(movies)
         }
-        return mapper.mapToDomainModel(movies).sortedByDescending { it.voteAverage }
+
+        return movies.asDomainModel().sortedByDescending { it.voteAverage }
+
     }
 
-    suspend fun getMovieDetail(id: Int): MovieDomainModel {
-        return mapper.mapToDomainModel(moviesCache.getMovieDetail(id))
-    }
+    suspend fun getMovieDetail(id: Int) = moviesCache.getMovieDetail(id).asDomainModel()
+
+
+
 }
 
 

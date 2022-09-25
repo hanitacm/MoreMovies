@@ -1,11 +1,11 @@
 package com.hanitacm.moremovies.ui.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hanitacm.data.repository.MoviesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -13,12 +13,10 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val moviesRepository: MoviesRepository,
 ) : ViewModel() {
-    private val _viewState = MutableLiveData<MainViewModelState>()
-    val viewState: LiveData<MainViewModelState>
-        get() {
-            if (_viewState.value == null) loading()
-            return _viewState
-        }
+    private val _viewState = MutableStateFlow<MainViewModelState>(MainViewModelState.Loading)
+    val viewState: StateFlow<MainViewModelState>
+        get() = _viewState
+
 
     fun getPopularMovies() {
         viewModelScope.launch {
@@ -30,9 +28,5 @@ class MainViewModel @Inject constructor(
                     _viewState.value = MainViewModelState.MoviesLoadFailure(it)
                 }
         }
-    }
-
-    private fun loading() {
-        _viewState.value = MainViewModelState.Loading
     }
 }

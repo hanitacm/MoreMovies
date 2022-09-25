@@ -81,6 +81,7 @@ dependencies {
     testImplementation testDependencies.mockito
     testImplementation testDependencies.mockito_kotlin
     testImplementation testDependencies.android_core_testing
+    testImplementation testDependencies.turbine
 
     androidTestImplementation uiTestDependencies.android_core_testing
     androidTestImplementation uiTestDependencies.android_ktx_testing

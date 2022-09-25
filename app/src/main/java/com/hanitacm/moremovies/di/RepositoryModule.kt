@@ -5,7 +5,6 @@ import com.hanitacm.data.datasource.api.MoviesApi
 import com.hanitacm.data.datasource.cache.MoviesCache
 import com.hanitacm.data.datasource.db.MoviesDatabase
 import com.hanitacm.data.repository.MoviesRepository
-import com.hanitacm.data.repository.model.mappers.MovieDataModelMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,10 +20,9 @@ object RepositoryModule {
     @Provides
     fun provideMoviesRepository(
         moviesApi: MoviesApi,
-        moviesDataModelMapper: MovieDataModelMapper,
         moviesCache: MoviesCache
     ): MoviesRepository =
-        MoviesRepository(moviesApi, moviesCache, moviesDataModelMapper)
+        MoviesRepository(moviesApi, moviesCache)
 
     @Singleton
     @Provides

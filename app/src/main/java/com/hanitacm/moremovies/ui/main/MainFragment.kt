@@ -7,7 +7,9 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,9 +19,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.hanitacm.data.repository.model.MovieDomainModel
 import com.hanitacm.moremovies.R
 import com.hanitacm.moremovies.databinding.MainFragmentBinding
+import com.hanitacm.moremovies.ui.main.MainViewModelState.*
 import com.hanitacm.moremovies.ui.main.adapters.MoviesAdapter
 import com.hanitacm.moremovies.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -60,18 +64,20 @@ class MainFragment : Fragment(R.layout.main_fragment) {
     }
 
     private fun subscribeObservers() {
-        viewModel.viewState.observe(
-            viewLifecycleOwner,
-            Observer {
+        lifecycleScope.launch {
+            viewModel.viewState.flowWithLifecycle(
+                viewLifecycleOwner.lifecycle,
+                Lifecycle.State.STARTED
+            ).collect {
                 when (it) {
-                    is MainViewModelState.Loading -> showProgressBar()
-                    is MainViewModelState.MoviesLoaded -> loadMovies(it.movies)
-                    is MainViewModelState.MoviesLoadFailure -> showError(it.error.message)
+                    is Loading -> showProgressBar()
+                    is MoviesLoaded -> loadMovies(it.movies)
+                    is MoviesLoadFailure -> showError(it.error.message)
 
                 }
-            })
+            }
+        }
     }
-
 
     private fun showProgressBar() {
         binding.progressBar.isVisible = true

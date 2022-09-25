@@ -1,16 +1,14 @@
 package com.hanitacm.moremovies.ui.main
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
+import app.cash.turbine.test
 import com.hanitacm.data.repository.MoviesRepository
 import com.hanitacm.data.repository.model.MovieDomainModel
 import com.hanitacm.moremovies.ui.MainCoroutineRule
-import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,8 +19,6 @@ import org.mockito.junit.MockitoJUnitRunner
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class MainViewModelTest {
-    @get:Rule
-    val instantExecutorRule = InstantTaskExecutorRule()
     @get:Rule
     val testCoroutineRule = MainCoroutineRule()
 
@@ -35,23 +31,16 @@ class MainViewModelTest {
     @InjectMocks
     lateinit var mainViewModel: MainViewModel
 
-    @Mock
-    lateinit var observer: Observer<in MainViewModelState>
-
-    @Before
-    fun setUp() {
-        mainViewModel.viewState.observeForever(observer)
-    }
-
     @Test
     fun `call getPopularMovies repository`() = runTest {
         whenever(moviesRepository.getPopularMovies()).thenReturn(listPopularMovies)
 
         mainViewModel.getPopularMovies()
 
-        verify(observer).onChanged(MainViewModelState.Loading)
-        verify(observer).onChanged(MainViewModelState.MoviesLoaded(listPopularMovies))
+        mainViewModel.viewState.test {
+            Assert.assertEquals(MainViewModelState.MoviesLoaded(listPopularMovies), awaitItem())
 
+        }
     }
 
     @Test
@@ -62,7 +51,10 @@ class MainViewModelTest {
 
         mainViewModel.getPopularMovies()
 
-        verify(observer).onChanged(MainViewModelState.MoviesLoadFailure(error))
+        mainViewModel.viewState.test {
+            Assert.assertEquals(MainViewModelState.MoviesLoadFailure(error), awaitItem())
+
+        }
     }
 
     private val listPopularMovies = listOf(
