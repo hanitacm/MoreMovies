@@ -7,7 +7,9 @@ import com.hanitacm.data.repository.model.MovieDataModel
 import com.hanitacm.data.repository.model.MovieDomainModel
 import com.hanitacm.data.repository.model.mappers.MovieDataModelMapper
 import com.nhaarman.mockitokotlin2.*
-import io.reactivex.Single
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
@@ -15,6 +17,7 @@ import org.mockito.Mock
 import org.mockito.Spy
 import org.mockito.junit.MockitoJUnitRunner
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class MoviesRepositoryTest {
 
@@ -32,8 +35,8 @@ class MoviesRepositoryTest {
 
 
     @Test
-    fun `get popular movies from cache`() {
-        whenever(moviesCache.getAllMovies()).thenReturn(Single.just(moviesDataModel))
+    fun `get popular movies from cache`() = runTest {
+        whenever(moviesCache.getAllMovies()).thenReturn(moviesDataModel)
 
         moviesRepository.getPopularMovies()
 
@@ -44,11 +47,11 @@ class MoviesRepositoryTest {
     }
 
     @Test
-    fun `get popular movies from api when cache is empty`() {
-        whenever(moviesCache.getAllMovies()).thenReturn(Single.just(emptyList()))
-        whenever(moviesApi.getAllMovies()).thenReturn(Single.just(moviesDataModel))
+    fun `get popular movies from api when cache is empty`() = runTest {
+        whenever(moviesCache.getAllMovies()).thenReturn(emptyList())
+        whenever(moviesApi.getAllMovies()).thenReturn(moviesDataModel)
 
-        moviesRepository.getPopularMovies().test()
+        moviesRepository.getPopularMovies()
 
         verify(moviesCache).getAllMovies()
         verify(moviesApi, only()).getAllMovies()
@@ -56,41 +59,40 @@ class MoviesRepositoryTest {
     }
 
     @Test
-    fun `insert movies in cache after get them`() {
-        whenever(moviesCache.getAllMovies()).thenReturn(Single.just(emptyList()))
-        whenever(moviesApi.getAllMovies()).thenReturn(Single.just(moviesDataModel))
+    fun `insert movies in cache after get them`() = runTest {
+        whenever(moviesCache.getAllMovies()).thenReturn(emptyList())
+        whenever(moviesApi.getAllMovies()).thenReturn(moviesDataModel)
 
-        moviesRepository.getPopularMovies().test()
+        moviesRepository.getPopularMovies()
 
         verify(moviesCache).insertMovies(moviesDataModel)
     }
 
     @Test
-    fun `map movies result to moviesDataModel`() {
-        whenever(moviesCache.getAllMovies()).thenReturn(Single.just(emptyList()))
-        whenever(moviesApi.getAllMovies()).thenReturn(Single.just(moviesDataModel))
+    fun `map movies result to moviesDataModel`() = runTest {
+        whenever(moviesCache.getAllMovies()).thenReturn(emptyList())
+        whenever(moviesApi.getAllMovies()).thenReturn(moviesDataModel)
 
-        val moviesResponse = moviesRepository.getPopularMovies().test()
+        val moviesResponse = moviesRepository.getPopularMovies()
 
         verify(moviesDataModelMapper).mapToDomainModel(moviesDataModel)
 
-        moviesResponse.assertResult(Result.success(moviesDomainModel))
-
+        Assert.assertEquals(moviesDomainModel, moviesResponse)
     }
 
     @Test
-    fun `get detail movie from cache`() {
+    fun `get detail movie from cache`() = runTest {
         val id = 694919
 
-        whenever(moviesCache.getMovieDetail(id)).thenReturn(Single.just(movieDataModel))
+        whenever(moviesCache.getMovieDetail(id)).thenReturn(movieDataModel)
 
-        val movieResponse = moviesRepository.getMovieDetail(id).test()
+        val movieResponse = moviesRepository.getMovieDetail(id)
 
         verify(moviesCache, only()).getMovieDetail(id)
         verifyZeroInteractions(moviesApi)
         verify(moviesDataModelMapper).mapToDomainModel(movieDataModel)
 
-        movieResponse.assertResult(Result.success(movieDomainModel))
+        assert(movieResponse == movieDomainModel)
 
     }
 

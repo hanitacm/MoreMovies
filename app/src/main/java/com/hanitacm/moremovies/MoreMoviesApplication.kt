@@ -4,7 +4,7 @@ import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class PopularMoviesApplication : Application() {
+class MoreMoviesApplication : Application() {
     override fun onCreate() {
         super.onCreate()
     }
