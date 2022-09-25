@@ -15,6 +15,7 @@ ext {
     android_support_version = '1.5.0'
 
     coil_version = "0.13.0"
+    coroutines_version = "1.6.4"
     javax_inject_version = "1"
     moshi_version="1.13.0"
     okhttp_version = "4.8.1"
@@ -40,6 +41,8 @@ ext {
             android_ktx                : "androidx.core:core-ktx:${android_ktx_version}",
             android_lifecycle          : "androidx.lifecycle:lifecycle-extensions:${android_lifecycle}",
             android_lifecycle_viewmodel: "androidx.lifecycle:lifecycle-viewmodel-ktx:${android_lifecycle_viewmodel}",
+            coroutines_core        : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version",
+            coroutines_android     : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version",
             hilt                       : "com.google.dagger:hilt-android:${hilt_version}",
             hilt_android_compiler      : "com.google.dagger:hilt-android-compiler:${hilt_version}",
             javax_inject               : "javax.inject:javax.inject:${javax_inject_version}",
@@ -50,6 +53,7 @@ ext {
             room                       : "androidx.room:room-runtime:${room_version}",
             room_compiler              : "androidx.room:room-compiler:${room_version}",
             room_rxjava2               : "androidx.room:room-rxjava2:${room_version}",
+            room_ktx                   : "androidx.room:room-ktx:$room_version",
             retrofit                   : "com.squareup.retrofit2:retrofit:${retrofit_version}",
             retrofit_rxJava            : "com.squareup.retrofit2:adapter-rxjava2:${retrofit_version}",
             retrofit_moshi             : "com.squareup.retrofit2:converter-moshi:${retrofit_version}",
@@ -73,6 +77,7 @@ ext {
 
     testDependencies = [
             android_core_testing: "androidx.arch.core:core-testing:${core_testing_version}",
+            coroutines_test     : "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version",
             junit               : "junit:junit:${junit_version}",
             mockito             : "org.mockito:mockito-inline:${mockito_version}",
             mockito_kotlin      : "com.nhaarman.mockitokotlin2:mockito-kotlin:${mockito_kotlin_version}",

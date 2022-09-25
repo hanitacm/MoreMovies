@@ -4,7 +4,6 @@ import com.hanitacm.data.datasource.api.MoviesApi
 import com.hanitacm.data.datasource.cache.MoviesCache
 import com.hanitacm.data.repository.model.MovieDomainModel
 import com.hanitacm.data.repository.model.mappers.MovieDataModelMapper
-import io.reactivex.Single
 import javax.inject.Inject
 
 class MoviesRepository @Inject constructor(
@@ -13,19 +12,18 @@ class MoviesRepository @Inject constructor(
     private val mapper: MovieDataModelMapper
 ) {
 
-    fun getPopularMovies(): Single<Result<List<MovieDomainModel>>> {
-        return moviesCache.getAllMovies()
-            .flatMap { movies ->
-                when {
-                    movies.isEmpty() -> moviesApi.getAllMovies()
-                        .doOnSuccess { moviesCache.insertMovies(it) }
-                    else -> Single.just(movies)
-                }
-            }.map { Result.success(mapper.mapToDomainModel(it)) }
+    suspend fun getPopularMovies(): List<MovieDomainModel> {
+        var movies = moviesCache.getAllMovies()
+
+        if (movies.isEmpty()) {
+            movies = moviesApi.getAllMovies()
+            moviesCache.insertMovies(movies)
+        }
+        return mapper.mapToDomainModel(movies)
     }
 
-    fun getMovieDetail(id: Int): Single<Result<MovieDomainModel>> {
-        return moviesCache.getMovieDetail(id).map { Result.success(mapper.mapToDomainModel(it)) }
+    suspend fun getMovieDetail(id: Int): MovieDomainModel {
+        return mapper.mapToDomainModel(moviesCache.getMovieDetail(id))
     }
 }
 

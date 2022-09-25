@@ -34,7 +34,7 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
             when (it) {
                 is DetailViewModelState.Loading -> showProgressBar()
                 is DetailViewModelState.DetailLoaded -> loadMovieDetail(it.movie)
-                is DetailViewModelState.DetailLoadFailure -> showError(it.error?.message)
+                is DetailViewModelState.DetailLoadFailure -> showError(it.error.message)
             }
         }
 

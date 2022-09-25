@@ -64,7 +64,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
                 when (it) {
                     is MainViewModelState.Loading -> showProgressBar()
                     is MainViewModelState.MoviesLoaded -> loadMovies(it.movies)
-                    is MainViewModelState.MoviesLoadFailure -> showError(it.error?.message)
+                    is MainViewModelState.MoviesLoadFailure -> showError(it.error.message)
 
                 }
             })

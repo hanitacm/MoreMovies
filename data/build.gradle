@@ -22,17 +22,17 @@ dependencies {
     def baseDependencies = rootProject.ext.baseDependencies
     def testDependencies = rootProject.ext.testDependencies
 
-
+    implementation baseDependencies.coroutines_core
     implementation baseDependencies.javax_inject
     implementation baseDependencies.moshi
     kapt baseDependencies.moshi_codegen
     implementation baseDependencies.room
     kapt baseDependencies.room_compiler
-    implementation baseDependencies.room_rxjava2
+    implementation baseDependencies.room_ktx
     implementation baseDependencies.retrofit
     implementation baseDependencies.retrofit_moshi
-    implementation baseDependencies.rxjava
 
+    testImplementation testDependencies.coroutines_test
     testImplementation testDependencies.junit
     testImplementation testDependencies.mockito
     testImplementation testDependencies.mockito_kotlin

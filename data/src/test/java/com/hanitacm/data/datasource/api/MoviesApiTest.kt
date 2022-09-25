@@ -8,7 +8,9 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.only
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import io.reactivex.Single
+import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
@@ -16,6 +18,7 @@ import org.mockito.Mock
 import org.mockito.Spy
 import org.mockito.junit.MockitoJUnitRunner
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class MoviesApiTest {
     @Mock
@@ -28,17 +31,15 @@ class MoviesApiTest {
     lateinit var moviesApi: MoviesApi
 
     @Test
-    fun `get popular movies from api`() {
-        whenever(moviesService.getPopularMovies(any())).thenReturn(Single.just(moviesResponse))
+    fun `get popular movies from api`() = runTest {
+        whenever(moviesService.getPopularMovies(any())).thenReturn(moviesResponse)
 
-        val apiResponse = moviesApi.getAllMovies().test()
-
-        apiResponse.assertNoErrors()
+        val apiResponse = moviesApi.getAllMovies()
 
         verify(moviesService, only()).getPopularMovies(any())
         verify(mapper).mapToDataModel(moviesResponse)
 
-        apiResponse.assertValue(moviesDataModel)
+        assertEquals(moviesDataModel, apiResponse)
     }
 
     private val moviesResponse =

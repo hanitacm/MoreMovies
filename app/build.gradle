@@ -57,6 +57,8 @@ dependencies {
     implementation baseDependencies.android_ktx
     implementation baseDependencies.android_lifecycle
     implementation baseDependencies.android_lifecycle_viewmodel
+    implementation baseDependencies.coroutines_android
+    implementation baseDependencies.coroutines_core
     implementation baseDependencies.hilt
     kapt baseDependencies.hilt_android_compiler
     implementation baseDependencies.okhhtp_logging
@@ -65,8 +67,6 @@ dependencies {
     implementation baseDependencies.retrofit_moshi
     implementation baseDependencies.room
     kapt baseDependencies.room_compiler
-    implementation baseDependencies.rxjava
-    implementation baseDependencies.rxandroid
 
     implementation uiDependencies.cardview
     implementation uiDependencies.coil
