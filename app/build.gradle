@@ -76,7 +76,7 @@ dependencies {
     implementation uiDependencies.recyclerview
     implementation uiDependencies.support_appcompat
 
-
+    testImplementation testDependencies.coroutines_test
     testImplementation testDependencies.junit
     testImplementation testDependencies.mockito
     testImplementation testDependencies.mockito_kotlin
