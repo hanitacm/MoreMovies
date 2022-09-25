@@ -1,8 +1,7 @@
 package com.hanitacm.moremovies.ui.detail
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
+import app.cash.turbine.test
 import com.hanitacm.data.repository.MoviesRepository
 import com.hanitacm.data.repository.model.MovieDomainModel
 import com.hanitacm.moremovies.ui.MainCoroutineRule
@@ -11,7 +10,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,26 +24,14 @@ class DetailViewModelTest {
     @get:Rule
     val testCoroutineRule = MainCoroutineRule()
 
-    @get:Rule
-    val instantExecutorRule = InstantTaskExecutorRule()
-
     @Mock
     lateinit var moviesRepository: MoviesRepository
 
     @Mock
     lateinit var savedStateHandle: SavedStateHandle
 
-    @Mock
-    lateinit var observer: Observer<DetailViewModelState>
-
-
     @InjectMocks
     lateinit var detailViewModel: DetailViewModel
-
-    @Before
-    fun setUp() {
-        detailViewModel.viewState.observeForever(observer)
-    }
 
     @Test
     fun `get movie detail from repository`() = runTest {
@@ -55,8 +42,10 @@ class DetailViewModelTest {
         detailViewModel.getMovieDetail(id)
 
         verify(moviesRepository, only()).getMovieDetail(id)
-        verify(observer).onChanged(DetailViewModelState.Loading)
-        verify(observer).onChanged(DetailViewModelState.DetailLoaded(movie))
+
+        detailViewModel.viewState.test {
+            Assert.assertEquals(DetailViewModelState.DetailLoaded(movie), awaitItem())
+        }
     }
 
     private val movie =

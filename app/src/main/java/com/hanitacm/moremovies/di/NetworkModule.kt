@@ -2,7 +2,6 @@ package com.hanitacm.moremovies.di
 
 import com.hanitacm.data.datasource.api.MoviesApi
 import com.hanitacm.data.datasource.api.MoviesService
-import com.hanitacm.data.datasource.api.model.mappers.MoviesDataModelMapper
 import com.hanitacm.moremovies.BuildConfig
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -38,7 +37,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideMoshi() = Moshi.Builder().build()
+    fun provideMoshi(): Moshi = Moshi.Builder().build()
 
     @Singleton
     @Provides
@@ -57,6 +56,5 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideMoviesApi(moviesService: MoviesService, mapper: MoviesDataModelMapper): MoviesApi =
-        MoviesApi(moviesService, mapper)
+    fun provideMoviesApi(moviesService: MoviesService): MoviesApi = MoviesApi(moviesService)
 }
