@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
+import com.google.android.material.snackbar.Snackbar
 import com.hanitacm.data.repository.model.MovieDomainModel
 import com.hanitacm.moremovies.R
 import com.hanitacm.moremovies.databinding.MainFragmentBinding
@@ -81,7 +83,9 @@ class MainFragment : Fragment(R.layout.main_fragment) {
     }
 
     private fun showError(error: String?) {
-
+        error?.let {
+            Snackbar.make(requireView(), error, LENGTH_LONG).show()
+        }
     }
 
 

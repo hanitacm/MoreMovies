@@ -19,7 +19,7 @@ class MoviesRepository @Inject constructor(
             movies = moviesApi.getAllMovies()
             moviesCache.insertMovies(movies)
         }
-        return mapper.mapToDomainModel(movies)
+        return mapper.mapToDomainModel(movies).sortedByDescending { it.voteAverage }
     }
 
     suspend fun getMovieDetail(id: Int): MovieDomainModel {
