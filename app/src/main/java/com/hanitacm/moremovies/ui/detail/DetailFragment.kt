@@ -14,6 +14,8 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navGraphViewModels
 import coil.load
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
+import com.google.android.material.snackbar.Snackbar
 import com.hanitacm.data.repository.model.MovieDomainModel
 import com.hanitacm.moremovies.R
 import com.hanitacm.moremovies.databinding.DetailFragmentBinding
@@ -81,7 +83,7 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
     }
 
     private fun showError(error: String?) {
-
+        error?.let { Snackbar.make(requireView(), error, LENGTH_LONG).show() }
     }
 
 
