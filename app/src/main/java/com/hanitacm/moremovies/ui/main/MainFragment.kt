@@ -7,13 +7,12 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar
 import com.hanitacm.data.repository.model.MovieDomainModel
@@ -30,10 +29,7 @@ import kotlinx.coroutines.launch
 class MainFragment : Fragment(R.layout.main_fragment) {
 
     private val binding by viewBinding(MainFragmentBinding::bind) { rvMovies.adapter = null }
-    private val viewModel: MainViewModel by navGraphViewModels(R.id.nav_graph) {
-        defaultViewModelProviderFactory
-    }
-    private lateinit var viewManager: RecyclerView.LayoutManager
+    private val viewModel by viewModels<MainViewModel>()
     private lateinit var viewAdapter: MoviesAdapter
 
 
@@ -52,8 +48,8 @@ class MainFragment : Fragment(R.layout.main_fragment) {
     }
 
     private fun setupRecyclerView() {
-        viewManager = GridLayoutManager(requireContext(), 2)
-        viewAdapter = MoviesAdapter { movieId ->
+        val viewManager = GridLayoutManager(requireContext(), 2)
+         viewAdapter = MoviesAdapter { movieId ->
             findNavController().navigate(
                 R.id.action_firstFragment_to_detailFragment,
                 bundleOf("movie" to movieId)
