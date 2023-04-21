@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -22,6 +23,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hanitacm.moremovies.R
 import com.hanitacm.moremovies.ui.theme.MoreMoviesTheme
+
+@Composable
+fun MovieDetail(title: String, countryDate: String, rating: Double) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp), text = title, style = TextStyle(fontSize = 24.sp)
+        )
+        CountryDateMovie(countryDate, rating)
+    }
+}
 
 @Composable
 fun CountryDateMovie(countryDate: String, rating: Double) {
@@ -67,6 +80,6 @@ private fun RatingElement(rating: Double) {
 @Preview(device = "id:pixel_3")
 private fun CountryDateMoviePreview() {
     MoreMoviesTheme {
-        CountryDateMovie("EN | 2022-12-07", 8.3)
+        MovieDetail("Puss in Boots: The Last Wish", "EN | 2022-12-07", 8.3)
     }
 }

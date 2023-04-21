@@ -64,9 +64,9 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
 
         with(binding) {
             movieOverview.text = movie.overview
-            movieTitle.text = movie.title
             composeView.setContent {
-                CountryDateMovie(
+                MovieDetail(
+                    title = movie.title,
                     countryDate = "${movie.originalLanguage.uppercase(Locale.getDefault())} | ${movie.releaseDate}",
                     rating = movie.voteAverage
                 )
