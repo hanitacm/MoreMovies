@@ -29,7 +29,12 @@ android {
     }
 
     buildFeatures {
+        compose = true
         viewBinding = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.6"
     }
 
     compileOptions {
@@ -50,6 +55,8 @@ dependencies {
     def uiDependencies = rootProject.ext.uiDependencies
     def testDependencies = rootProject.ext.testDependencies
     def uiTestDependencies = rootProject.ext.uiTestDependencies
+    def composeBom = platform(uiDependencies.compose)
+
 
     implementation project(":data")
 
@@ -75,6 +82,10 @@ dependencies {
     implementation uiDependencies.navigation_fragment
     implementation uiDependencies.recyclerview
     implementation uiDependencies.support_appcompat
+    implementation composeBom
+    implementation uiDependencies.compose_material
+    implementation uiDependencies.compose_tooling_preview
+    debugImplementation uiDependencies.compose_tooling
 
     testImplementation testDependencies.coroutines_test
     testImplementation testDependencies.junit
@@ -83,6 +94,7 @@ dependencies {
     testImplementation testDependencies.android_core_testing
     testImplementation testDependencies.turbine
 
+    androidTestImplementation composeBom
     androidTestImplementation uiTestDependencies.android_core_testing
     androidTestImplementation uiTestDependencies.android_ktx_testing
     androidTestImplementation uiTestDependencies.dexmaker_mockito
