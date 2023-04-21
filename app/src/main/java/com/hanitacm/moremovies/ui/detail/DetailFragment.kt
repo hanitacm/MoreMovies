@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import coil.load
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar
 import com.hanitacm.data.repository.model.MovieDomainModel
@@ -65,13 +64,13 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
         with(binding) {
             composeView.setContent {
                 MovieDetail(
+                    image = "https://image.tmdb.org/t/p/w780${movie.backdropPath}",
                     title = movie.title,
                     countryDate = "${movie.originalLanguage.uppercase(Locale.getDefault())} | ${movie.releaseDate}",
                     rating = movie.voteAverage,
                     overview = movie.overview
                 )
             }
-            backdrop.load("https://image.tmdb.org/t/p/w780${movie.backdropPath}")
         }
     }
 

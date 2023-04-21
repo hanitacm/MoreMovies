@@ -14,7 +14,7 @@ ext {
     android_recyclerview_version = '1.2.1'
     android_support_version = '1.5.0'
 
-    coil_version = "0.13.0"
+    coil_version = "2.3.0"
     compose_version = "2023.03.00"
     coroutines_version = "1.6.4"
     javax_inject_version = "1"
@@ -68,6 +68,7 @@ ext {
     uiDependencies = [
             cardview           : "androidx.cardview:cardview:${android_cardview_version}",
             coil               : "io.coil-kt:coil:${coil_version}",
+            coil_compose       : "io.coil-kt:coil-compose:${coil_version}",
             compose            : "androidx.compose:compose-bom:${compose_version}",
             compose_material   : "androidx.compose.material:material",
             compose_tooling    : "androidx.compose.ui:ui-tooling",
