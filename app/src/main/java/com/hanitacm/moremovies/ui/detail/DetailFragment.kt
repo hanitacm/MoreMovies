@@ -2,10 +2,7 @@ package com.hanitacm.moremovies.ui.detail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.SpannableStringBuilder
 import android.view.View
-import androidx.core.text.bold
-import androidx.core.text.scale
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -68,15 +65,13 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
         with(binding) {
             movieOverview.text = movie.overview
             movieTitle.text = movie.title
-            countryDate.text =
-                "${movie.originalLanguage.uppercase(Locale.getDefault())} | ${movie.releaseDate}"
-            rating.text = movie.voteAverage.toString()
+            composeView.setContent {
+                CountryDateMovie(
+                    countryDate = "${movie.originalLanguage.uppercase(Locale.getDefault())} | ${movie.releaseDate}",
+                    rating = movie.voteAverage
+                )
+            }
             backdrop.load("https://image.tmdb.org/t/p/w780${movie.backdropPath}")
-            val sb = SpannableStringBuilder()
-                .bold { append(movie.voteAverage.toString()) }
-                .scale(0.75F) { append("/10") }
-
-            rating.text = sb
         }
     }
 

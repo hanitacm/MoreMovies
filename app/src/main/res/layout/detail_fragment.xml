@@ -34,29 +34,10 @@
                     android:layout_marginTop="16dp"
                     android:textSize="24sp" />
 
-                <LinearLayout
+                <androidx.compose.ui.platform.ComposeView
+                    android:id="@+id/compose_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/country_date"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_weight="4"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/rating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_vertical"
-                        android:textSize="16sp"
-                        app:drawableTopCompat="@drawable/ic_star" />
-                </LinearLayout>
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/movieOverview"
