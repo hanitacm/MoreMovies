@@ -25,14 +25,24 @@ import com.hanitacm.moremovies.R
 import com.hanitacm.moremovies.ui.theme.MoreMoviesTheme
 
 @Composable
-fun MovieDetail(title: String, countryDate: String, rating: Double) {
+fun MovieDetail(title: String, countryDate: String, rating: Double, overview: String) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp), text = title, style = TextStyle(fontSize = 24.sp)
+                .padding(top = 16.dp),
+            text = title,
+            style = TextStyle(fontSize = 24.sp)
         )
         CountryDateMovie(countryDate, rating)
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
+            text = overview,
+            lineHeight = 25.sp,
+            fontSize = 16.sp
+        )
     }
 }
 
@@ -80,6 +90,11 @@ private fun RatingElement(rating: Double) {
 @Preview(device = "id:pixel_3")
 private fun CountryDateMoviePreview() {
     MoreMoviesTheme {
-        MovieDetail("Puss in Boots: The Last Wish", "EN | 2022-12-07", 8.3)
+        MovieDetail(
+            "Puss in Boots: The Last Wish",
+            "EN | 2022-12-07",
+            8.3,
+            overview = "While working underground to fix a water main, Brooklyn plumbers—and brothers—Mario and Luigi are transported down a mysterious pipe and wander into a magical new world. But when the brothers are separated, Mario embarks on an epic quest to find Luigi."
+        )
     }
 }

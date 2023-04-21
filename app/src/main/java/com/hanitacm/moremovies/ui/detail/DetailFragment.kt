@@ -63,12 +63,12 @@ class DetailFragment : Fragment(R.layout.detail_fragment) {
 
 
         with(binding) {
-            movieOverview.text = movie.overview
             composeView.setContent {
                 MovieDetail(
                     title = movie.title,
                     countryDate = "${movie.originalLanguage.uppercase(Locale.getDefault())} | ${movie.releaseDate}",
-                    rating = movie.voteAverage
+                    rating = movie.voteAverage,
+                    overview = movie.overview
                 )
             }
             backdrop.load("https://image.tmdb.org/t/p/w780${movie.backdropPath}")
