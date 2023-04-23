@@ -9,7 +9,7 @@ ext {
     android_constraint_layout_version = '2.1.4'
     android_ktx_version = "1.9.0"
     android_lifecycle = "2.2.0"
-    android_lifecycle_viewmodel = '2.5.1'
+    android_lifecycle_viewmodel = '2.6.1'
     android_nav_version = '2.5.1'
     android_recyclerview_version = '1.2.1'
     android_support_version = '1.5.0'
@@ -43,6 +43,7 @@ ext {
             android_ktx                : "androidx.core:core-ktx:${android_ktx_version}",
             android_lifecycle          : "androidx.lifecycle:lifecycle-extensions:${android_lifecycle}",
             android_lifecycle_viewmodel: "androidx.lifecycle:lifecycle-viewmodel-ktx:${android_lifecycle_viewmodel}",
+            android_lifecycle_compose  : "androidx.lifecycle:lifecycle-runtime-compose:${android_lifecycle_viewmodel}",
             coroutines_core            : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version",
             coroutines_android         : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version",
             hilt                       : "com.google.dagger:hilt-android:${hilt_version}",

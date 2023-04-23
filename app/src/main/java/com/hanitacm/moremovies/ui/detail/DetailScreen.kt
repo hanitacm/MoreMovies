@@ -1,15 +1,26 @@
 package com.hanitacm.moremovies.ui.detail
 
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -23,28 +34,71 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.hanitacm.moremovies.R
-import com.hanitacm.moremovies.ui.theme.MoreMoviesTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import java.util.Locale
 
+@SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MovieDetail(
-    image: String? = null,
-    title: String,
-    countryDate: String,
-    rating: Double,
-    overview: String
-) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        AsyncImage(
-            modifier = Modifier.height(250.dp),
-            model = image,
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
-        MovieDescription(title, countryDate, rating, overview, Modifier.padding(horizontal = 16.dp))
+fun MovieDetail(viewModel: DetailViewModel, movieId: Int) {
+
+    viewModel.getMovieDetail(movieId)
+
+    val uiState: DetailViewModelState by viewModel.viewState.collectAsStateWithLifecycle()
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
+    val scaffoldState: ScaffoldState = rememberScaffoldState()
+
+    Scaffold(scaffoldState = scaffoldState) {
+        when (uiState) {
+            is DetailViewModelState.DetailLoadFailure -> {
+                (uiState as DetailViewModelState.DetailLoadFailure).error.message?.let {
+                    coroutineScope.launch {
+                        scaffoldState.snackbarHostState.showSnackbar(
+                            message = it
+                        )
+                    }
+                }
+            }
+
+            is DetailViewModelState.DetailLoaded -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    with(uiState as DetailViewModelState.DetailLoaded) {
+                        AsyncImage(
+                            modifier = Modifier.height(250.dp),
+                            model = "https://image.tmdb.org/t/p/w780${movie.backdropPath}",
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop
+                        )
+
+                        MovieDescription(
+                            title = movie.title,
+                            countryDate = "${movie.originalLanguage.uppercase(Locale.getDefault())} | ${movie.releaseDate}",
+                            rating = movie.voteAverage,
+                            overview = movie.overview,
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+                    }
+
+                }
+
+            }
+
+            DetailViewModelState.Loading ->
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) { CircularProgressIndicator() }
+        }
     }
 }
+
 
 @Composable
 private fun MovieDescription(
@@ -115,12 +169,5 @@ private fun RatingElement(rating: Double) {
 @Composable
 @Preview(device = "id:pixel_3")
 private fun CountryDateMoviePreview() {
-    MoreMoviesTheme {
-        MovieDetail(
-            title = "Puss in Boots: The Last Wish",
-            countryDate = "EN | 2022-12-07",
-            rating = 8.3,
-            overview = "While working underground to fix a water main, Brooklyn plumbers—and brothers—Mario and Luigi are transported down a mysterious pipe and wander into a magical new world. But when the brothers are separated, Mario embarks on an epic quest to find Luigi."
-        )
-    }
+    CircularProgressIndicator()
 }

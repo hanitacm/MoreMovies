@@ -63,6 +63,7 @@ dependencies {
     implementation baseDependencies.kotlin_stdlib
     implementation baseDependencies.android_ktx
     implementation baseDependencies.android_lifecycle
+    implementation baseDependencies.android_lifecycle_compose
     implementation baseDependencies.android_lifecycle_viewmodel
     implementation baseDependencies.coroutines_android
     implementation baseDependencies.coroutines_core
