@@ -18,7 +18,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.hanitacm.data.repository.model.MovieDomainModel
 import com.hanitacm.moremovies.R
 import com.hanitacm.moremovies.databinding.MainFragmentBinding
-import com.hanitacm.moremovies.ui.main.MainViewModelState.*
+import com.hanitacm.moremovies.ui.common.ProgressBar
+import com.hanitacm.moremovies.ui.main.MainViewModelState.Loading
+import com.hanitacm.moremovies.ui.main.MainViewModelState.MoviesLoadFailure
+import com.hanitacm.moremovies.ui.main.MainViewModelState.MoviesLoaded
 import com.hanitacm.moremovies.ui.main.adapters.MoviesAdapter
 import com.hanitacm.moremovies.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,6 +40,9 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         super.onViewCreated(view, savedInstanceState)
         setToolBar()
         setupRecyclerView()
+        binding.composeView.setContent {
+            ProgressBar()
+        }
         subscribeObservers()
 
         viewModel.getPopularMovies()
@@ -76,11 +82,11 @@ class MainFragment : Fragment(R.layout.main_fragment) {
     }
 
     private fun showProgressBar() {
-        binding.progressBar.isVisible = true
+         binding.composeView.isVisible = true
     }
 
     private fun loadMovies(movies: List<MovieDomainModel>) {
-        binding.progressBar.isGone = true
+        binding.composeView.isGone = true
         viewAdapter.submitList(movies)
     }
 
