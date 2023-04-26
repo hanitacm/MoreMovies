@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.hanitacm.data.repository.model.MovieDomainModel
 import com.hanitacm.moremovies.R
+import com.hanitacm.moremovies.ui.theme.MoreMoviesTheme
 
 
 @Composable
@@ -72,7 +73,7 @@ private fun MovieListItem(modifier: Modifier, item: MovieDomainModel) {
 @Composable
 private fun RatingList(rate: Double) {
     Row(
-        modifier = Modifier.height(16.dp),
+        modifier = Modifier.height(18.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
@@ -108,8 +109,10 @@ fun MovieListPreview() {
         )
 
     }
+    MoreMoviesTheme() {
+        MovieList(list)
+    }
 
-    MovieList(list)
 
 }
 
