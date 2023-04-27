@@ -2,8 +2,10 @@ package com.hanitacm.moremovies.ui.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.hanitacm.moremovies.R
 import com.hanitacm.moremovies.databinding.MainFragmentBinding
 import com.hanitacm.moremovies.ui.theme.MoreMoviesTheme
@@ -21,7 +23,12 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.setContent {
             MoreMoviesTheme {
-                MainScreen(viewModel = viewModel)
+                MainScreen(viewModel) { movieId ->
+                    findNavController().navigate(
+                        R.id.action_firstFragment_to_detailFragment,
+                        bundleOf("movie" to movieId)
+                    )
+                }
             }
         }
     }

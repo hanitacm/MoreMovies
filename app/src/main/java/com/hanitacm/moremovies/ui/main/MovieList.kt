@@ -1,6 +1,7 @@
 package com.hanitacm.moremovies.ui.main
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -30,20 +31,26 @@ import com.hanitacm.moremovies.ui.theme.MoreMoviesTheme
 
 
 @Composable
-fun MovieList(movies: List<MovieDomainModel>) {
+fun MovieList(movies: List<MovieDomainModel>, onMovieClick: (Int) -> Unit) {
     LazyVerticalGrid(
         contentPadding = PaddingValues(4.dp),
         columns = GridCells.Adaptive(150.dp)
     ) {
-        items(items = movies) { item -> MovieListItem(modifier = Modifier.padding(4.dp), item) }
+        items(items = movies) { item ->
+            MovieListItem(
+                modifier = Modifier.padding(4.dp),
+                item= item,
+                onClick = { onMovieClick(item.id) }
+            )
+        }
 
     }
 }
 
 @Composable
-private fun MovieListItem(modifier: Modifier, item: MovieDomainModel) {
+private fun MovieListItem(modifier: Modifier, item: MovieDomainModel, onClick: () -> Unit) {
     Card(elevation = 4.dp, shape = RoundedCornerShape(4.dp), modifier = modifier) {
-        Column {
+        Column(Modifier.clickable { onClick() }) {
             AsyncImage(
                 model = "https://image.tmdb.org/t/p/w185${item.posterPath}",
                 contentDescription = null,
@@ -109,8 +116,8 @@ fun MovieListPreview() {
         )
 
     }
-    MoreMoviesTheme() {
-        MovieList(list)
+    MoreMoviesTheme {
+        MovieList(list) {}
     }
 
 
