@@ -4,10 +4,8 @@ package com.hanitacm.moremovies.ui.detail
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.hanitacm.moremovies.R
+import com.hanitacm.moremovies.ui.common.ProgressBar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -90,11 +89,7 @@ fun MovieDetail(viewModel: DetailViewModel, movieId: Int) {
 
             }
 
-            DetailViewModelState.Loading ->
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) { CircularProgressIndicator() }
+            DetailViewModelState.Loading -> ProgressBar()
         }
     }
 }
