@@ -68,6 +68,7 @@ dependencies {
     implementation baseDependencies.coroutines_android
     implementation baseDependencies.coroutines_core
     implementation baseDependencies.hilt
+    implementation baseDependencies.hilt_compose
     kapt baseDependencies.hilt_android_compiler
     implementation baseDependencies.okhhtp_logging
     implementation baseDependencies.retrofit
@@ -76,14 +77,10 @@ dependencies {
     implementation baseDependencies.room
     kapt baseDependencies.room_compiler
 
-    implementation uiDependencies.cardview
     implementation uiDependencies.coil
     implementation uiDependencies.coil_compose
-    implementation uiDependencies.constraint_layout
+    implementation uiDependencies.compose_navigation
     implementation uiDependencies.navigation_ui
-    implementation uiDependencies.navigation_fragment
-    implementation uiDependencies.recyclerview
-    implementation uiDependencies.support_appcompat
     implementation composeBom
     implementation uiDependencies.compose_material
     implementation uiDependencies.compose_tooling_preview
