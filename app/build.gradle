@@ -77,15 +77,10 @@ dependencies {
     implementation baseDependencies.room
     kapt baseDependencies.room_compiler
 
-    implementation uiDependencies.cardview
     implementation uiDependencies.coil
     implementation uiDependencies.coil_compose
     implementation uiDependencies.compose_navigation
-    implementation uiDependencies.constraint_layout
     implementation uiDependencies.navigation_ui
-    implementation uiDependencies.navigation_fragment
-    implementation uiDependencies.recyclerview
-    implementation uiDependencies.support_appcompat
     implementation composeBom
     implementation uiDependencies.compose_material
     implementation uiDependencies.compose_tooling_preview
