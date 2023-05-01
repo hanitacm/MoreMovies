@@ -68,6 +68,7 @@ dependencies {
     implementation baseDependencies.coroutines_android
     implementation baseDependencies.coroutines_core
     implementation baseDependencies.hilt
+    implementation baseDependencies.hilt_compose
     kapt baseDependencies.hilt_android_compiler
     implementation baseDependencies.okhhtp_logging
     implementation baseDependencies.retrofit
