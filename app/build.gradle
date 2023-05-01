@@ -79,6 +79,7 @@ dependencies {
     implementation uiDependencies.cardview
     implementation uiDependencies.coil
     implementation uiDependencies.coil_compose
+    implementation uiDependencies.compose_navigation
     implementation uiDependencies.constraint_layout
     implementation uiDependencies.navigation_ui
     implementation uiDependencies.navigation_fragment
