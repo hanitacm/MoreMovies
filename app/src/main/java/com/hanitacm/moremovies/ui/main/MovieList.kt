@@ -39,7 +39,7 @@ fun MovieList(movies: List<MovieDomainModel>, onMovieClick: (Int) -> Unit) {
         items(items = movies) { item ->
             MovieListItem(
                 modifier = Modifier.padding(4.dp),
-                item= item,
+                item = item,
                 onClick = { onMovieClick(item.id) }
             )
         }
@@ -68,6 +68,7 @@ private fun MovieListItem(modifier: Modifier, item: MovieDomainModel, onClick: (
                         .padding(top = 8.dp)
                         .fillMaxWidth(), text = item.title,
                     maxLines = 2,
+                    minLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.h6
                 )
