@@ -5,9 +5,6 @@ import app.cash.turbine.test
 import com.hanitacm.data.repository.MoviesRepository
 import com.hanitacm.data.repository.model.MovieDomainModel
 import com.hanitacm.moremovies.ui.MainCoroutineRule
-import com.nhaarman.mockitokotlin2.only
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
@@ -17,6 +14,9 @@ import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.only
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
