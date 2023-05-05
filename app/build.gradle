@@ -97,11 +97,7 @@ dependencies {
     androidTestImplementation uiTestDependencies.android_compose_ui_testing
     debugImplementation uiTestDependencies.android_compose_ui_testing_rules
     androidTestImplementation uiTestDependencies.android_navigation_test
-    androidTestImplementation uiTestDependencies.android_ktx_testing
-    androidTestImplementation uiTestDependencies.dexmaker_mockito
-    androidTestImplementation uiTestDependencies.mockito_kotlin
     androidTestImplementation uiTestDependencies.espresso
-    androidTestImplementation uiTestDependencies.espresso_contrib
     androidTestImplementation uiTestDependencies.hilt_testing
     kaptAndroidTest baseDependencies.hilt_android_compiler
     androidTestImplementation uiTestDependencies.junit_testing
