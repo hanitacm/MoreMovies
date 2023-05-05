@@ -5,12 +5,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.hanitacm.moremovies.ui.detail.MovieDetail
 import com.hanitacm.moremovies.ui.main.MainScreen
 
 
 @Composable
-fun MoreMoviesNavigation(navController: NavHostController) {
+fun MoreMoviesNavigation(navController: NavHostController = rememberNavController()) {
     NavHost(navController = navController, startDestination = Screens.Main.route) {
         composable(Screens.Main.route) {
             MainScreen(viewModel = hiltViewModel(), onMovieClick = { movieId ->
