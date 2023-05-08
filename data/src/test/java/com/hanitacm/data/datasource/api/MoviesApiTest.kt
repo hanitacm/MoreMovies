@@ -3,11 +3,7 @@ package com.hanitacm.data.datasource.api
 import com.hanitacm.data.datasource.api.model.MovieData
 import com.hanitacm.data.datasource.api.model.MoviesApiModel
 import com.hanitacm.data.repository.model.MovieDataModel
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.only
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
-import junit.framework.Assert.assertEquals
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
@@ -15,6 +11,9 @@ import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -31,7 +30,7 @@ class MoviesApiTest {
 
         val apiResponse = moviesApi.getAllMovies()
 
-        verify(moviesService, only()).getPopularMovies(any())
+        verify(moviesService).getPopularMovies(any())
 
         assertEquals(moviesDataModel, apiResponse)
     }

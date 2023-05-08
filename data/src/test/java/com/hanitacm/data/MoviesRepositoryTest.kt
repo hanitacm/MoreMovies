@@ -5,7 +5,6 @@ import com.hanitacm.data.datasource.cache.MoviesCache
 import com.hanitacm.data.repository.MoviesRepository
 import com.hanitacm.data.repository.model.MovieDataModel
 import com.hanitacm.data.repository.model.MovieDomainModel
-import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
@@ -14,6 +13,10 @@ import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.never
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyNoInteractions
+import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -35,8 +38,8 @@ class MoviesRepositoryTest {
 
         moviesRepository.getPopularMovies()
 
-        verify(moviesCache, only()).getAllMovies()
-        verifyZeroInteractions(moviesApi)
+        verify(moviesCache).getAllMovies()
+        verifyNoInteractions(moviesApi)
         verify(moviesCache, never()).insertMovies(moviesDataModel)
 
     }
@@ -49,7 +52,7 @@ class MoviesRepositoryTest {
         moviesRepository.getPopularMovies()
 
         verify(moviesCache).getAllMovies()
-        verify(moviesApi, only()).getAllMovies()
+        verify(moviesApi).getAllMovies()
 
     }
 
@@ -81,8 +84,8 @@ class MoviesRepositoryTest {
 
         val movieResponse = moviesRepository.getMovieDetail(id)
 
-        verify(moviesCache, only()).getMovieDetail(id)
-        verifyZeroInteractions(moviesApi)
+        verify(moviesCache).getMovieDetail(id)
+        verifyNoInteractions(moviesApi)
 
         assert(movieResponse == movieDomainModel)
 

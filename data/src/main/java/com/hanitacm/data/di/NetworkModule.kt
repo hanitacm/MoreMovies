@@ -1,8 +1,8 @@
-package com.hanitacm.moremovies.di
+package com.hanitacm.data.di
 
+import com.hanitacm.data.BuildConfig
 import com.hanitacm.data.datasource.api.MoviesApi
 import com.hanitacm.data.datasource.api.MoviesService
-import com.hanitacm.moremovies.BuildConfig
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -11,7 +11,6 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
@@ -44,7 +43,6 @@ object NetworkModule {
     fun provideRetrofit(client: OkHttpClient, moshi: Moshi): Retrofit =
         Retrofit.Builder()
             .baseUrl(moviesAPIUrl)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(client)
             .build()
