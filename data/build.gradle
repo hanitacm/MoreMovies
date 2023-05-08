@@ -31,12 +31,14 @@ dependencies {
     def testDependencies = rootProject.ext.testDependencies
 
     implementation baseDependencies.coroutines_core
+    implementation baseDependencies.hilt
     implementation baseDependencies.javax_inject
     implementation baseDependencies.moshi
     kapt baseDependencies.moshi_codegen
     implementation baseDependencies.room
     kapt baseDependencies.room_compiler
     implementation baseDependencies.room_ktx
+    implementation baseDependencies.okhhtp_logging
     implementation baseDependencies.retrofit
     implementation baseDependencies.retrofit_moshi
 

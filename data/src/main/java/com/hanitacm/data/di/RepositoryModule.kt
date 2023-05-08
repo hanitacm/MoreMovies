@@ -1,4 +1,4 @@
-package com.hanitacm.moremovies.di
+package com.hanitacm.data.di
 
 import android.content.Context
 import com.hanitacm.data.datasource.api.MoviesApi

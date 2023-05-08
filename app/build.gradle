@@ -72,12 +72,6 @@ dependencies {
     implementation baseDependencies.hilt
     implementation baseDependencies.hilt_compose
     kapt baseDependencies.hilt_android_compiler
-    implementation baseDependencies.okhhtp_logging
-    implementation baseDependencies.retrofit
-    implementation baseDependencies.retrofit_rxJava
-    implementation baseDependencies.retrofit_moshi
-    implementation baseDependencies.room
-    kapt baseDependencies.room_compiler
 
     implementation uiDependencies.coil
     implementation uiDependencies.coil_compose
