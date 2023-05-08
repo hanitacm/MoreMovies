@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hanitacm.data.repository.MoviesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -21,7 +20,7 @@ class MainViewModel @Inject constructor(
 
     fun getPopularMovies() {
         viewModelScope.launch {
-            delay(1000)
+
             runCatching { moviesRepository.getPopularMovies() }
                 .onSuccess { movies ->
                     _viewState.value = MainViewModelState.MoviesLoaded(movies)
