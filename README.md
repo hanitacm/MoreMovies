@@ -4,6 +4,10 @@ Android application that shows a list of most popular movies and their details
 
 Min API Level 23
 
+##### Branches:
+*  main (Jetpack  compose)
+*  xml_views 
+
 
 ## Tech-stack
 * Retrofit
