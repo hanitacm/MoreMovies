@@ -25,7 +25,7 @@ import org.junit.runner.RunWith
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
-class MyComposeTest {
+class MoreMoviesNavigationTest {
     @get:Rule(order = 1)
     var hiltTestRule = HiltAndroidRule(this)
 
