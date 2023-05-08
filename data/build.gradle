@@ -32,6 +32,7 @@ dependencies {
 
     implementation baseDependencies.coroutines_core
     implementation baseDependencies.hilt
+    kapt baseDependencies.hilt_android_compiler
     implementation baseDependencies.javax_inject
     implementation baseDependencies.moshi
     kapt baseDependencies.moshi_codegen
