@@ -53,48 +53,39 @@ kapt {
 }
 
 dependencies {
-    def baseDependencies = rootProject.ext.baseDependencies
-    def uiDependencies = rootProject.ext.uiDependencies
-    def testDependencies = rootProject.ext.testDependencies
-    def uiTestDependencies = rootProject.ext.uiTestDependencies
-    def composeBom = platform(uiDependencies.compose)
+    def composeBom = platform(libs.compose)
 
 
     implementation project(":data")
 
-    implementation baseDependencies.kotlin_stdlib
-    implementation baseDependencies.android_ktx
-    implementation baseDependencies.android_lifecycle
-    implementation baseDependencies.android_lifecycle_compose
-    implementation baseDependencies.android_lifecycle_viewmodel
-    implementation baseDependencies.coroutines_android
-    implementation baseDependencies.coroutines_core
-    implementation baseDependencies.hilt
-    implementation baseDependencies.hilt_compose
-    kapt baseDependencies.hilt_android_compiler
+    implementation libs.androidx.ktx
+    implementation libs.androidx.lifecycle
+    implementation libs.coroutines.android
+    implementation libs.coroutines.core
+    implementation libs.hilt
+    implementation libs.hilt.compose
+    kapt libs.hilt.compiler
 
-    implementation uiDependencies.coil
-    implementation uiDependencies.coil_compose
-    implementation uiDependencies.compose_navigation
-    implementation uiDependencies.navigation_ui
+    implementation libs.coil.compose
+    implementation libs.navigation.compose
+    implementation libs.navigation.ui
     implementation composeBom
-    implementation uiDependencies.compose_material
-    implementation uiDependencies.compose_tooling_preview
-    debugImplementation uiDependencies.compose_tooling
+    implementation libs.compose.material
+    implementation libs.compose.tooling.preview
+    debugImplementation libs.compose.tooling
 
-    testImplementation testDependencies.coroutines_test
-    testImplementation testDependencies.junit
-    testImplementation testDependencies.mockito
-    testImplementation testDependencies.mockito_kotlin
-    testImplementation testDependencies.android_core_testing
-    testImplementation testDependencies.turbine
+    testImplementation libs.coroutines.test
+    testImplementation libs.junit
+    testImplementation libs.mockito
+    testImplementation libs.mockito.kotlin
+    testImplementation libs.turbine
 
     androidTestImplementation composeBom
-    androidTestImplementation uiTestDependencies.android_compose_ui_testing
-    debugImplementation uiTestDependencies.android_compose_ui_testing_rules
-    androidTestImplementation uiTestDependencies.android_navigation_test
-    androidTestImplementation uiTestDependencies.espresso
-    androidTestImplementation uiTestDependencies.hilt_testing
-    kaptAndroidTest baseDependencies.hilt_android_compiler
-    androidTestImplementation uiTestDependencies.junit_testing
+    androidTestImplementation libs.compose.ui.test
+    debugImplementation libs.compose.ui.testing.rules
+    androidTestImplementation libs.navigation.test
+    androidTestImplementation libs.espresso
+    androidTestImplementation libs.hilt.test
+    kaptAndroidTest libs.hilt.compiler
+    androidTestImplementation libs.junit.test
 }

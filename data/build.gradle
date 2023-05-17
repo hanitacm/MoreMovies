@@ -27,25 +27,22 @@ android {
 
 dependencies {
 
-    def baseDependencies = rootProject.ext.baseDependencies
-    def testDependencies = rootProject.ext.testDependencies
+    implementation libs.coroutines.core
+    implementation libs.hilt
+    kapt libs.hilt.compiler
+    implementation libs.moshi
+    kapt libs.moshi.codegen
+    implementation libs.room
+    kapt libs.room.compiler
+    implementation libs.room.ktx
+    implementation libs.okhttp.logging
+    implementation libs.retrofit
+    implementation libs.retrofit.moshi
 
-    implementation baseDependencies.coroutines_core
-    implementation baseDependencies.hilt
-    implementation baseDependencies.javax_inject
-    implementation baseDependencies.moshi
-    kapt baseDependencies.moshi_codegen
-    implementation baseDependencies.room
-    kapt baseDependencies.room_compiler
-    implementation baseDependencies.room_ktx
-    implementation baseDependencies.okhhtp_logging
-    implementation baseDependencies.retrofit
-    implementation baseDependencies.retrofit_moshi
-
-    testImplementation testDependencies.coroutines_test
-    testImplementation testDependencies.junit
-    testImplementation testDependencies.mockito
-    testImplementation testDependencies.mockito_kotlin
-    testImplementation testDependencies.room_testing
+    testImplementation libs.coroutines.test
+    testImplementation libs.junit
+    testImplementation libs.mockito
+    testImplementation libs.mockito.kotlin
+    testImplementation libs.room.testing
 
 }
