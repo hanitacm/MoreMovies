@@ -1,8 +1,7 @@
 plugins {
     alias libs.plugins.android.library
-    alias libs.plugins.kotlin.android
     id 'kotlin-parcelize'
-    id 'kotlin-kapt'
+    alias libs.plugins.ksp
 }
 
 
@@ -11,6 +10,9 @@ android {
 
     compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
 
+    buildFeatures {
+        buildConfig true
+    }
     defaultConfig {
         minSdkVersion globalConfiguration["androidMinSdkVersion"]
         targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
@@ -31,11 +33,11 @@ dependencies {
 
     implementation libs.coroutines.core
     implementation libs.hilt
-    kapt libs.hilt.compiler
+    ksp libs.hilt.compiler
     implementation libs.moshi
-    kapt libs.moshi.codegen
+    ksp libs.moshi.codegen
     implementation libs.room
-    kapt libs.room.compiler
+    ksp libs.room.compiler
     implementation libs.room.ktx
     implementation libs.okhttp.logging
     implementation libs.retrofit
