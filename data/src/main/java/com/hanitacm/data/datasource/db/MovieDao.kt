@@ -11,7 +11,7 @@ interface MovieDao {
     suspend fun getAll(): List<Movie>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(movies: List<Movie>)
+    suspend fun insertAll(movies: List<Movie>): Unit
 
     @Query("SELECT * FROM Movie WHERE id=:id")
     suspend fun getById(id: Int): Movie

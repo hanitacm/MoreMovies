@@ -1,9 +1,9 @@
 plugins {
     alias libs.plugins.android.application
-    alias libs.plugins.kotlin.android
     alias libs.plugins.hilt.android
-    id 'kotlin-kapt'
+    alias libs.plugins.ksp
     id 'kotlin-parcelize'
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -33,9 +33,6 @@ android {
         viewBinding = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.10"
-    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -46,10 +43,6 @@ android {
     }
 
     namespace 'com.hanitacm.moremovies'
-}
-
-kapt {
-    correctErrorTypes true
 }
 
 dependencies {
@@ -64,7 +57,7 @@ dependencies {
     implementation libs.coroutines.core
     implementation libs.hilt
     implementation libs.hilt.compose
-    kapt libs.hilt.compiler
+    ksp libs.hilt.compiler
 
     implementation libs.coil.compose
     implementation libs.navigation.compose
@@ -86,6 +79,6 @@ dependencies {
     androidTestImplementation libs.navigation.test
     androidTestImplementation libs.espresso
     androidTestImplementation libs.hilt.test
-    kaptAndroidTest libs.hilt.compiler
+    kspAndroidTest libs.hilt.compiler
     androidTestImplementation libs.junit.test
 }
