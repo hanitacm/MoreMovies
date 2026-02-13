@@ -1,5 +1,11 @@
+
 [versions]
 agp= "9.0.0"
+compileSdk = "36"
+minSdk = "23"
+javaVersion = "17"
+jvmTarget = "17"
+
 coil = "2.3.0"
 compose = "2023.10.01"
 coroutines = "1.8.0"
@@ -14,6 +20,7 @@ navigation = "2.5.3"
 okhttp = "4.8.1"
 retrofit = "2.7.2"
 room = "2.8.4"
+spotless = "8.2.1"
 
 junit = "4.13"
 mockito = "3.3.3"
@@ -64,12 +71,15 @@ junit-test = { group = "androidx.test.ext", name = "junit", version.ref = "junit
 navigation-test = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigation" }
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
 
+# Dependencies of the included build-logic
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle-api", version.ref = "agp" }
+compose-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
+spotless-gradlePlugin = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp= { id = "com.google.devtools.ksp", version.ref = "ksp" }
-
-
-
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

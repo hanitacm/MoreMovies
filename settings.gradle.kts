@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         gradlePluginPortal()
         google()
@@ -13,5 +14,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "MoreMovies"
-include ':app'
-include ':data'
+include(":app")
+include(":data")
+

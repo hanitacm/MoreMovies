@@ -1,6 +1,0 @@
-ext {
-    //Android
-    androidMinSdkVersion = 23
-    androidTargetSdkVersion = 36
-    androidCompileSdkVersion = 36
-}
