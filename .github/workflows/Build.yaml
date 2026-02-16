@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ '*' ]
+  workflow_dispatch:
+
+jobs:
+    lint:
+      name: Spotless check
+      runs-on: macos-latest
+      steps:
+        - name: Check out code
+          uses: actions/checkout@v6.0.2
+        - name: Set up JDK
+          uses: actions/setup-java@v5.2.0
+          with:
+            distribution: 'zulu'
+            java-version: 21
+        - name: spotless
+          run: ./gradlew spotlessCheck
+
+    build:
+      name: Build and Tests
+      runs-on: macos-latest
+      steps:
+        - name: Build with Gradle
+          run: ./gradlew --scan --stacktrace \assemble
+        - name: Run unit tests
+          run: ./gradlew --scan --stacktrace \testDebugUnitTest
