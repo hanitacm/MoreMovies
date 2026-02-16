@@ -26,6 +26,8 @@ jobs:
       name: Build and Tests
       runs-on: macos-latest
       steps:
+        - name: Setup Gradle
+          uses: gradle/actions/setup-gradle@v5
         - name: Run unit tests
           run: ./gradlew --scan --stacktrace testDebugUnitTest
         - name: Build with Gradle
