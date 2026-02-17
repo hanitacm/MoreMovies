@@ -1,8 +1,8 @@
 package com.hanitacm.data.di
 
-import com.hanitacm.data.BuildConfig
 import com.hanitacm.data.datasource.api.MoviesApi
 import com.hanitacm.data.datasource.api.MoviesService
+import com.hanitacm.moremovies.data.BuildConfig
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
