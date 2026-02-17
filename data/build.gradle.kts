@@ -1,5 +1,3 @@
-import com.android.build.api.dsl.LibraryExtension
-
 plugins {
     alias(libs.plugins.android.library)
     id("kotlin-parcelize")
@@ -7,7 +5,7 @@ plugins {
     id("moremovies.spotless-convention")
 }
 
-configure<LibraryExtension> {
+android {
     namespace = "com.hanitacm.moremovies.data"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
@@ -21,6 +19,11 @@ configure<LibraryExtension> {
     compileOptions {
         sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
         targetCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
+    }
+    kotlin {
+        jvmToolchain {
+            languageVersion.set(JavaLanguageVersion.of(libs.versions.jvmTarget.get()))
+        }
     }
 }
 
