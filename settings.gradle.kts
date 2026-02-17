@@ -16,4 +16,3 @@ dependencyResolutionManagement {
 rootProject.name = "MoreMovies"
 include(":app")
 include(":data")
-

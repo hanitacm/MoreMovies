@@ -1,6 +1,5 @@
 package com.hanitacm.moremovies.ui.detail
 
-
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -43,7 +42,6 @@ import java.util.Locale
 @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MovieDetail(viewModel: DetailViewModel, movieId: Int) {
-
     viewModel.getMovieDetail(movieId)
 
     val uiState: DetailViewModelState by viewModel.viewState.collectAsStateWithLifecycle()
@@ -56,7 +54,7 @@ fun MovieDetail(viewModel: DetailViewModel, movieId: Int) {
                 (uiState as DetailViewModelState.DetailLoadFailure).error.message?.let {
                     coroutineScope.launch {
                         scaffoldState.snackbarHostState.showSnackbar(
-                            message = it
+                            message = it,
                         )
                     }
                 }
@@ -64,16 +62,17 @@ fun MovieDetail(viewModel: DetailViewModel, movieId: Int) {
 
             is DetailViewModelState.DetailLoaded -> {
                 Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .verticalScroll(rememberScrollState())
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .verticalScroll(rememberScrollState()),
                 ) {
                     with(uiState as DetailViewModelState.DetailLoaded) {
                         AsyncImage(
                             modifier = Modifier.height(250.dp),
                             model = "https://image.tmdb.org/t/p/w780${movie.backdropPath}",
                             contentDescription = null,
-                            contentScale = ContentScale.Crop
+                            contentScale = ContentScale.Crop,
                         )
 
                         MovieDescription(
@@ -81,19 +80,18 @@ fun MovieDetail(viewModel: DetailViewModel, movieId: Int) {
                             countryDate = "${movie.originalLanguage.uppercase(Locale.getDefault())} | ${movie.releaseDate}",
                             rating = movie.voteAverage,
                             overview = movie.overview,
-                            modifier = Modifier.padding(horizontal = 16.dp)
+                            modifier = Modifier.padding(horizontal = 16.dp),
                         )
                     }
-
                 }
-
             }
 
-            DetailViewModelState.Loading -> ProgressBar()
+            DetailViewModelState.Loading -> {
+                ProgressBar()
+            }
         }
     }
 }
-
 
 @Composable
 private fun MovieDescription(
@@ -101,34 +99,37 @@ private fun MovieDescription(
     countryDate: String,
     rating: Double,
     overview: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(top = 16.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
         text = title,
-        style = TextStyle(fontSize = 24.sp)
+        style = TextStyle(fontSize = 24.sp),
     )
     CountryDateMovie(countryDate, rating, modifier)
     Text(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 16.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
         text = overview,
         lineHeight = 25.sp,
-        fontSize = 16.sp
+        fontSize = 16.sp,
     )
 }
 
 @Composable
 fun CountryDateMovie(countryDate: String, rating: Double, modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(top = 16.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
         verticalAlignment = Alignment.Bottom,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Column {
             Text(
@@ -143,18 +144,20 @@ fun CountryDateMovie(countryDate: String, rating: Double, modifier: Modifier = M
 @Composable
 private fun RatingElement(rating: Double) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(painter = painterResource(id = R.drawable.ic_star), contentDescription = null)
         Text(
-            modifier = Modifier
-                .padding(top = 8.dp),
-            text = buildAnnotatedString {
-                withStyle(style = SpanStyle(fontSize = 17.sp, fontWeight = FontWeight.Bold)) {
-                    append(rating.toString())
-                }
-                append("/10")
-            },
+            modifier =
+                Modifier
+                    .padding(top = 8.dp),
+            text =
+                buildAnnotatedString {
+                    withStyle(style = SpanStyle(fontSize = 17.sp, fontWeight = FontWeight.Bold)) {
+                        append(rating.toString())
+                    }
+                    append("/10")
+                },
             textAlign = TextAlign.Center,
             fontSize = 16.sp,
         )

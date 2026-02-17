@@ -1,6 +1,5 @@
 package com.hanitacm.moremovies.buildlogic
 
-
 import com.diffplug.gradle.spotless.SpotlessExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project

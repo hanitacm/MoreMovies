@@ -15,7 +15,5 @@ data class Movie(
     @ColumnInfo(name = "originalLanguage") val originalLanguage: String,
     @ColumnInfo(name = "originalTitle") val originalTitle: String,
     @ColumnInfo(name = "popularity") val popularity: Double,
-    @ColumnInfo(name = "voteAverage") val voteAverage: Double
+    @ColumnInfo(name = "voteAverage") val voteAverage: Double,
 )
-
-

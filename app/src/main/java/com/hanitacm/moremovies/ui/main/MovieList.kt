@@ -29,21 +29,19 @@ import com.hanitacm.data.repository.model.MovieDomainModel
 import com.hanitacm.moremovies.R
 import com.hanitacm.moremovies.ui.theme.MoreMoviesTheme
 
-
 @Composable
 fun MovieList(movies: List<MovieDomainModel>, onMovieClick: (Int) -> Unit) {
     LazyVerticalGrid(
         contentPadding = PaddingValues(4.dp),
-        columns = GridCells.Adaptive(150.dp)
+        columns = GridCells.Adaptive(150.dp),
     ) {
         items(items = movies) { item ->
             MovieListItem(
                 modifier = Modifier.padding(4.dp),
                 item = item,
-                onClick = { onMovieClick(item.id) }
+                onClick = { onMovieClick(item.id) },
             )
         }
-
     }
 }
 
@@ -55,25 +53,27 @@ private fun MovieListItem(modifier: Modifier, item: MovieDomainModel, onClick: (
                 model = "https://image.tmdb.org/t/p/w185${item.posterPath}",
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.height(229.dp)
+                modifier = Modifier.height(229.dp),
             )
             Column(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxSize()
+                modifier =
+                    Modifier
+                        .padding(8.dp)
+                        .fillMaxSize(),
             ) {
                 RatingList(item.voteAverage)
                 Text(
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .fillMaxWidth(), text = item.title,
+                    modifier =
+                        Modifier
+                            .padding(top = 8.dp)
+                            .fillMaxWidth(),
+                    text = item.title,
                     maxLines = 2,
                     minLines = 2,
                     overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.h6
+                    style = MaterialTheme.typography.h6,
                 )
             }
-
         }
     }
 }
@@ -82,16 +82,16 @@ private fun MovieListItem(modifier: Modifier, item: MovieDomainModel, onClick: (
 private fun RatingList(rate: Double) {
     Row(
         modifier = Modifier.height(18.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
             modifier = Modifier.padding(end = 8.dp),
             painter = painterResource(id = R.drawable.ic_star),
-            contentDescription = null
+            contentDescription = null,
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = rate.toString()
+            text = rate.toString(),
         )
     }
 }
@@ -105,23 +105,20 @@ fun MovieListPreview() {
             MovieDomainModel(
                 popularity = 2000.0,
                 voteAverage = 0.0,
-                overview = "A professional thief with \$40 million in debt and his family's life on the line must commit one final heist - rob a futuristic airborne casino filled with the world's most dangerous criminals.",
+                overview =
+                    $$"A professional thief with $40 million in debt and his family's life on the line must commit one final heist" +
+                        " - rob a futuristic airborne casino filled with the world's most dangerous criminals.",
                 posterPath = "/6CoRTJTmijhBLJTUNoVSUNxZMEI.jpg",
                 releaseDate = "2020-09-29",
                 title = "Money Plane",
                 originalTitle = "Money Plane",
                 originalLanguage = "en",
                 backdropPath = "/gYRzgYE3EOnhUkv7pcbAAsVLe5f.jpg",
-                id = 34
-            )
+                id = 34,
+            ),
         )
-
     }
     MoreMoviesTheme {
         MovieList(list) {}
     }
-
-
 }
-
-   

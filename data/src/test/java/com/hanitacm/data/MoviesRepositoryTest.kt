@@ -21,7 +21,6 @@ import org.mockito.kotlin.whenever
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class MoviesRepositoryTest {
-
     @Mock
     lateinit var moviesApi: MoviesApi
 
@@ -31,94 +30,98 @@ class MoviesRepositoryTest {
     @InjectMocks
     lateinit var moviesRepository: MoviesRepository
 
+    @Test
+    fun `get popular movies from cache`() =
+        runTest {
+            whenever(moviesCache.getAllMovies()).thenReturn(moviesDataModel)
+
+            moviesRepository.getPopularMovies()
+
+            verify(moviesCache).getAllMovies()
+            verifyNoInteractions(moviesApi)
+            verify(moviesCache, never()).insertMovies(moviesDataModel)
+        }
 
     @Test
-    fun `get popular movies from cache`() = runTest {
-        whenever(moviesCache.getAllMovies()).thenReturn(moviesDataModel)
+    fun `get popular movies from api when cache is empty`() =
+        runTest {
+            whenever(moviesCache.getAllMovies()).thenReturn(emptyList())
+            whenever(moviesApi.getAllMovies()).thenReturn(moviesDataModel)
 
-        moviesRepository.getPopularMovies()
+            moviesRepository.getPopularMovies()
 
-        verify(moviesCache).getAllMovies()
-        verifyNoInteractions(moviesApi)
-        verify(moviesCache, never()).insertMovies(moviesDataModel)
-
-    }
-
-    @Test
-    fun `get popular movies from api when cache is empty`() = runTest {
-        whenever(moviesCache.getAllMovies()).thenReturn(emptyList())
-        whenever(moviesApi.getAllMovies()).thenReturn(moviesDataModel)
-
-        moviesRepository.getPopularMovies()
-
-        verify(moviesCache).getAllMovies()
-        verify(moviesApi).getAllMovies()
-
-    }
+            verify(moviesCache).getAllMovies()
+            verify(moviesApi).getAllMovies()
+        }
 
     @Test
-    fun `insert movies in cache after get them`() = runTest {
-        whenever(moviesCache.getAllMovies()).thenReturn(emptyList())
-        whenever(moviesApi.getAllMovies()).thenReturn(moviesDataModel)
+    fun `insert movies in cache after get them`() =
+        runTest {
+            whenever(moviesCache.getAllMovies()).thenReturn(emptyList())
+            whenever(moviesApi.getAllMovies()).thenReturn(moviesDataModel)
 
-        moviesRepository.getPopularMovies()
+            moviesRepository.getPopularMovies()
 
-        verify(moviesCache).insertMovies(moviesDataModel)
-    }
-
-    @Test
-    fun `map movies result to moviesDataModel`() = runTest {
-        whenever(moviesCache.getAllMovies()).thenReturn(emptyList())
-        whenever(moviesApi.getAllMovies()).thenReturn(moviesDataModel)
-
-        val moviesResponse = moviesRepository.getPopularMovies()
-
-        Assert.assertEquals(moviesDomainModel, moviesResponse)
-    }
+            verify(moviesCache).insertMovies(moviesDataModel)
+        }
 
     @Test
-    fun `get detail movie from cache`() = runTest {
-        val id = 694919
+    fun `map movies result to moviesDataModel`() =
+        runTest {
+            whenever(moviesCache.getAllMovies()).thenReturn(emptyList())
+            whenever(moviesApi.getAllMovies()).thenReturn(moviesDataModel)
 
-        whenever(moviesCache.getMovieDetail(id)).thenReturn(movieDataModel)
+            val moviesResponse = moviesRepository.getPopularMovies()
 
-        val movieResponse = moviesRepository.getMovieDetail(id)
+            Assert.assertEquals(moviesDomainModel, moviesResponse)
+        }
 
-        verify(moviesCache).getMovieDetail(id)
-        verifyNoInteractions(moviesApi)
+    @Test
+    fun `get detail movie from cache`() =
+        runTest {
+            val id = 694919
 
-        assert(movieResponse == movieDomainModel)
+            whenever(moviesCache.getMovieDetail(id)).thenReturn(movieDataModel)
 
-    }
+            val movieResponse = moviesRepository.getMovieDetail(id)
 
-    private val movieDataModel = MovieDataModel(
-        popularity = 2000.0,
-        voteAverage = 0.0,
-        overview = "A professional thief with \$40 million in debt and his family's life on the line must commit one final heist - rob a futuristic airborne casino filled with the world's most dangerous criminals.",
-        posterPath = "/6CoRTJTmijhBLJTUNoVSUNxZMEI.jpg",
-        releaseDate = "2020-09-29",
-        title = "Money Plane",
-        originalTitle = "Money Plane",
-        originalLanguage = "en",
-        backdropPath = "/gYRzgYE3EOnhUkv7pcbAAsVLe5f.jpg",
-        id = 694919
-    )
+            verify(moviesCache).getMovieDetail(id)
+            verifyNoInteractions(moviesApi)
+
+            assert(movieResponse == movieDomainModel)
+        }
+
+    private val movieDataModel =
+        MovieDataModel(
+            popularity = 2000.0,
+            voteAverage = 0.0,
+            overview =
+                $$"A professional thief with $40 million in debt and his family's life on the line must commit one final heist" +
+                    " - rob a futuristic airborne casino filled with the world's most dangerous criminals.",
+            posterPath = "/6CoRTJTmijhBLJTUNoVSUNxZMEI.jpg",
+            releaseDate = "2020-09-29",
+            title = "Money Plane",
+            originalTitle = "Money Plane",
+            originalLanguage = "en",
+            backdropPath = "/gYRzgYE3EOnhUkv7pcbAAsVLe5f.jpg",
+            id = 694919,
+        )
     private val moviesDataModel = listOf(movieDataModel)
 
-
-    private val movieDomainModel = MovieDomainModel(
-        popularity = 2000.0,
-        voteAverage = 0.0,
-        overview = "A professional thief with \$40 million in debt and his family's life on the line must commit one final heist - rob a futuristic airborne casino filled with the world's most dangerous criminals.",
-        posterPath = "/6CoRTJTmijhBLJTUNoVSUNxZMEI.jpg",
-        releaseDate = "2020-09-29",
-        title = "Money Plane",
-        originalTitle = "Money Plane",
-        originalLanguage = "en",
-        backdropPath = "/gYRzgYE3EOnhUkv7pcbAAsVLe5f.jpg",
-        id = 694919
-    )
+    private val movieDomainModel =
+        MovieDomainModel(
+            popularity = 2000.0,
+            voteAverage = 0.0,
+            overview =
+                "A professional thief with $40 million in debt and his family's life on the line must commit one final heist" +
+                    " - rob a futuristic airborne casino filled with the world's most dangerous criminals.",
+            posterPath = "/6CoRTJTmijhBLJTUNoVSUNxZMEI.jpg",
+            releaseDate = "2020-09-29",
+            title = "Money Plane",
+            originalTitle = "Money Plane",
+            originalLanguage = "en",
+            backdropPath = "/gYRzgYE3EOnhUkv7pcbAAsVLe5f.jpg",
+            id = 694919,
+        )
     private val moviesDomainModel = listOf(movieDomainModel)
-
-
 }

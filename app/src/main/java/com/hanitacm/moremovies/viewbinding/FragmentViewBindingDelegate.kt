@@ -15,27 +15,30 @@ class FragmentViewBindingDelegate<T : ViewBinding>(
     val disposeViewsCallback: T.() -> Unit = {},
 ) :
     ReadOnlyProperty<Fragment, T> {
-
     private var binding: T? = null
 
     init {
         // View binding that gets cleaned up when the fragment's view is destroyed.
         // Inspired from AutoClearedValue https://github.com/android/architecture-components-samples/blob/main/GithubBrowserSample/app/src/main/java/com/android/example/github/util/AutoClearedValue.kt
-        fragment.lifecycle.addObserver(object : DefaultLifecycleObserver {
-            override fun onCreate(owner: LifecycleOwner) {
-                registerOnViewDestroy()
-            }
-        })
+        fragment.lifecycle.addObserver(
+            object : DefaultLifecycleObserver {
+                override fun onCreate(owner: LifecycleOwner) {
+                    registerOnViewDestroy()
+                }
+            },
+        )
     }
 
     private fun registerOnViewDestroy() {
         fragment.viewLifecycleOwnerLiveData.observe(fragment) { viewLifecycleOwner ->
-            viewLifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
-                override fun onDestroy(owner: LifecycleOwner) {
-                    binding?.disposeViewsCallback()
-                    binding = null
-                }
-            })
+            viewLifecycleOwner.lifecycle.addObserver(
+                object : DefaultLifecycleObserver {
+                    override fun onDestroy(owner: LifecycleOwner) {
+                        binding?.disposeViewsCallback()
+                        binding = null
+                    }
+                },
+            )
         }
     }
 

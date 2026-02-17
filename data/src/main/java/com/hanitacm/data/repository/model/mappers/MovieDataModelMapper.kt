@@ -5,7 +5,6 @@ import com.hanitacm.data.repository.model.MovieDomainModel
 
 fun List<MovieDataModel>.asDomainModel() = this.map { it.asDomainModel() }
 
-
 fun MovieDataModel.asDomainModel() =
     MovieDomainModel(
         id = id,
@@ -17,8 +16,5 @@ fun MovieDataModel.asDomainModel() =
         originalLanguage = originalLanguage,
         originalTitle = originalTitle,
         popularity = popularity,
-        voteAverage = voteAverage
+        voteAverage = voteAverage,
     )
-
-
-

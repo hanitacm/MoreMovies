@@ -32,47 +32,46 @@ class MainViewModelTest {
     lateinit var mainViewModel: MainViewModel
 
     @Test
-    fun `call getPopularMovies repository`() = runTest {
-        whenever(moviesRepository.getPopularMovies()).thenReturn(listPopularMovies)
+    fun `call getPopularMovies repository`() =
+        runTest {
+            whenever(moviesRepository.getPopularMovies()).thenReturn(listPopularMovies)
 
-        mainViewModel.getPopularMovies()
+            mainViewModel.getPopularMovies()
 
-        mainViewModel.viewState.test {
-            Assert.assertEquals(MainViewModelState.MoviesLoaded(listPopularMovies), awaitItem())
-
+            mainViewModel.viewState.test {
+                Assert.assertEquals(MainViewModelState.MoviesLoaded(listPopularMovies), awaitItem())
+            }
         }
-    }
 
     @Test
-    fun `returns error if it is not possible get popular movies list`() = runTest {
-        val error = RuntimeException()
+    fun `returns error if it is not possible get popular movies list`() =
+        runTest {
+            val error = RuntimeException()
 
-        whenever(moviesRepository.getPopularMovies()).thenThrow(error)
+            whenever(moviesRepository.getPopularMovies()).thenThrow(error)
 
-        mainViewModel.getPopularMovies()
+            mainViewModel.getPopularMovies()
 
-        mainViewModel.viewState.test {
-            Assert.assertEquals(MainViewModelState.MoviesLoadFailure(error), awaitItem())
-
+            mainViewModel.viewState.test {
+                Assert.assertEquals(MainViewModelState.MoviesLoadFailure(error), awaitItem())
+            }
         }
-    }
 
-    private val listPopularMovies = listOf(
-        MovieDomainModel(
-            popularity = 2000.0,
-            voteAverage = 0.0,
-            overview = "A professional thief with \$40 million in debt and his family's life on the line must commit one final heist - rob a futuristic airborne casino filled with the world's most dangerous criminals.",
-            posterPath = "/6CoRTJTmijhBLJTUNoVSUNxZMEI.jpg",
-            releaseDate = "2020-09-29",
-            title = "Money Plane",
-            originalTitle = "Money Plane",
-            originalLanguage = "en",
-            backdropPath = "/gYRzgYE3EOnhUkv7pcbAAsVLe5f.jpg",
-            id = 694919
+    private val listPopularMovies =
+        listOf(
+            MovieDomainModel(
+                popularity = 2000.0,
+                voteAverage = 0.0,
+                overview =
+                    $$"A professional thief with $40 million in debt and his family's life on the line must commit one final heist" +
+                        " - rob a futuristic airborne casino filled with the world's most dangerous criminals.",
+                posterPath = "/6CoRTJTmijhBLJTUNoVSUNxZMEI.jpg",
+                releaseDate = "2020-09-29",
+                title = "Money Plane",
+                originalTitle = "Money Plane",
+                originalLanguage = "en",
+                backdropPath = "/gYRzgYE3EOnhUkv7pcbAAsVLe5f.jpg",
+                id = 694919,
+            ),
         )
-    )
 }
-
-
-
-

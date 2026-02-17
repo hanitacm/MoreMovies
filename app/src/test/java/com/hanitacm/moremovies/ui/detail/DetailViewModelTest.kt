@@ -34,32 +34,34 @@ class DetailViewModelTest {
     lateinit var detailViewModel: DetailViewModel
 
     @Test
-    fun `get movie detail from repository`() = runTest {
-        val id = 34
+    fun `get movie detail from repository`() =
+        runTest {
+            val id = 34
 
-        whenever(moviesRepository.getMovieDetail(id)).thenReturn(movie)
+            whenever(moviesRepository.getMovieDetail(id)).thenReturn(movie)
 
-        detailViewModel.getMovieDetail(id)
+            detailViewModel.getMovieDetail(id)
 
-        verify(moviesRepository, only()).getMovieDetail(id)
+            verify(moviesRepository, only()).getMovieDetail(id)
 
-        detailViewModel.viewState.test {
-            Assert.assertEquals(DetailViewModelState.DetailLoaded(movie), awaitItem())
+            detailViewModel.viewState.test {
+                Assert.assertEquals(DetailViewModelState.DetailLoaded(movie), awaitItem())
+            }
         }
-    }
 
     private val movie =
         MovieDomainModel(
             popularity = 2000.0,
             voteAverage = 0.0,
-            overview = "A professional thief with \$40 million in debt and his family's life on the line must commit one final heist - rob a futuristic airborne casino filled with the world's most dangerous criminals.",
+            overview =
+                "A professional thief with $40 million in debt and his family's life on the line must commit one final " +
+                    "heist - rob a futuristic airborne casino filled with the world's most dangerous criminals.",
             posterPath = "/6CoRTJTmijhBLJTUNoVSUNxZMEI.jpg",
             releaseDate = "2020-09-29",
             title = "Money Plane",
             originalTitle = "Money Plane",
             originalLanguage = "en",
             backdropPath = "/gYRzgYE3EOnhUkv7pcbAAsVLe5f.jpg",
-            id = 34
+            id = 34,
         )
-
 }

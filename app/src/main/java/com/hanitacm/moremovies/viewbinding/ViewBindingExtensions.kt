@@ -6,6 +6,6 @@ import androidx.viewbinding.ViewBinding
 
 fun <T : ViewBinding> Fragment.viewBinding(
     viewBindingFactory: (View) -> T,
-    disposeCallback: T.() -> Unit = {}
+    disposeCallback: T.() -> Unit = {},
 ) =
     FragmentViewBindingDelegate(this, viewBindingFactory, disposeCallback)

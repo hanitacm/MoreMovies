@@ -1,6 +1,5 @@
 package com.hanitacm.data.datasource.api.model.mappers
 
-
 import com.hanitacm.data.datasource.api.model.MoviesApiModel
 import com.hanitacm.data.repository.model.MovieDataModel
 
@@ -16,7 +15,6 @@ fun MoviesApiModel.asDataModel(): List<MovieDataModel> =
             originalLanguage = it.originalLanguage,
             originalTitle = it.originalTitle,
             popularity = it.popularity,
-            voteAverage = it.voteAverage
+            voteAverage = it.voteAverage,
         )
     }
-

@@ -10,24 +10,24 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
-    private val moviesRepository: MoviesRepository,
-) : ViewModel() {
-    private val _viewState = MutableStateFlow<MainViewModelState>(MainViewModelState.Loading)
-    val viewState: StateFlow<MainViewModelState>
-        get() = _viewState
+class MainViewModel
+    @Inject
+    constructor(
+        private val moviesRepository: MoviesRepository,
+    ) : ViewModel() {
+        private val _viewState = MutableStateFlow<MainViewModelState>(MainViewModelState.Loading)
+        val viewState: StateFlow<MainViewModelState>
+            get() = _viewState
 
-
-    fun getPopularMovies() {
-        viewModelScope.launch {
-
-            runCatching { moviesRepository.getPopularMovies() }
-                .onSuccess { movies ->
-                    _viewState.value = MainViewModelState.MoviesLoaded(movies)
-                }
-                .onFailure {
-                    _viewState.value = MainViewModelState.MoviesLoadFailure(it)
-                }
+        fun getPopularMovies() {
+            viewModelScope.launch {
+                runCatching { moviesRepository.getPopularMovies() }
+                    .onSuccess { movies ->
+                        _viewState.value = MainViewModelState.MoviesLoaded(movies)
+                    }
+                    .onFailure {
+                        _viewState.value = MainViewModelState.MoviesLoadFailure(it)
+                    }
+            }
         }
     }
-}

@@ -15,19 +15,18 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
-
     @Singleton
     @Provides
     fun provideMoviesRepository(
         moviesApi: MoviesApi,
-        moviesCache: MoviesCache
+        moviesCache: MoviesCache,
     ): MoviesRepository =
         MoviesRepository(moviesApi, moviesCache)
 
     @Singleton
     @Provides
-    fun provideMoviesDb(@ApplicationContext appContext: Context): MoviesDatabase =
+    fun provideMoviesDb(
+        @ApplicationContext appContext: Context,
+    ): MoviesDatabase =
         MoviesDatabase.getDb(appContext)
-
 }
-

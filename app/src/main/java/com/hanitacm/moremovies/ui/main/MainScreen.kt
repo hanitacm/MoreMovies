@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainScreen(viewModel: MainViewModel, onMovieClick: (Int) -> Unit) {
-
     viewModel.getPopularMovies()
 
     val uiState: MainViewModelState by viewModel.viewState.collectAsStateWithLifecycle()
@@ -28,21 +27,26 @@ fun MainScreen(viewModel: MainViewModel, onMovieClick: (Int) -> Unit) {
 
     Scaffold(topBar = { TopBar() }, scaffoldState = scaffoldState) {
         when (uiState) {
-            MainViewModelState.Loading -> ProgressBar()
+            MainViewModelState.Loading -> {
+                ProgressBar()
+            }
+
             is MainViewModelState.MoviesLoadFailure -> {
                 (uiState as MainViewModelState.MoviesLoadFailure).error.message?.let {
                     coroutineScope.launch {
                         scaffoldState.snackbarHostState.showSnackbar(
-                            message = it
+                            message = it,
                         )
                     }
                 }
             }
 
-            is MainViewModelState.MoviesLoaded -> MovieList(
-                movies = (uiState as MainViewModelState.MoviesLoaded).movies,
-                onMovieClick = onMovieClick
-            )
+            is MainViewModelState.MoviesLoaded -> {
+                MovieList(
+                    movies = (uiState as MainViewModelState.MoviesLoaded).movies,
+                    onMovieClick = onMovieClick,
+                )
+            }
         }
     }
 }
@@ -53,7 +57,3 @@ private fun TopBar() {
         Text(text = stringResource(id = R.string.app_name))
     })
 }
-
-
-
-

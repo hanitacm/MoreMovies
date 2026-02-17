@@ -17,7 +17,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val moviesAPIUrl = "https://api.themoviedb.org/3/"
+    private const val MOVIES_API_URL = "https://api.themoviedb.org/3/"
 
     @Singleton
     @Provides
@@ -42,7 +42,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(client: OkHttpClient, moshi: Moshi): Retrofit =
         Retrofit.Builder()
-            .baseUrl(moviesAPIUrl)
+            .baseUrl(MOVIES_API_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(client)
             .build()

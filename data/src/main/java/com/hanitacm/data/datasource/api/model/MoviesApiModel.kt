@@ -1,6 +1,5 @@
 package com.hanitacm.data.datasource.api.model
 
-
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -13,7 +12,7 @@ data class MoviesApiModel(
     @Json(name = "total_pages")
     val totalPages: Int,
     @Json(name = "total_results")
-    val totalResults: Int
+    val totalResults: Int,
 )
 
 @JsonClass(generateAdapter = true)
@@ -45,5 +44,5 @@ data class MovieData(
     @Json(name = "vote_average")
     val voteAverage: Double,
     @Json(name = "vote_count")
-    val voteCount: Int
+    val voteCount: Int,
 )

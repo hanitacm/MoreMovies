@@ -7,7 +7,6 @@ group = "com.hanitacm.moremovies.buildlogic"
 java {
     sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
     targetCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
-
 }
 
 dependencies {
