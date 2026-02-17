@@ -32,11 +32,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
     }
     kotlin {
-        jvmToolchain(17)
+        jvmToolchain(libs.versions.jvmTarget.get().toInt())
     }
 
     namespace = "com.hanitacm.moremovies"
